@@ -21,7 +21,7 @@ The application's design is based on [this Figma wireframe](https://www.figma.co
 
 Versus our Current React Prototype
 
-![React Prototype](wireframe.png)
+![React Prototype](reactprototype.png)
 
 ## Component Structure
 
