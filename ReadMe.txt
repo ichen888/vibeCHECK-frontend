@@ -1,68 +1,136 @@
-# vibeCHECK-frontend
+# vibeCHECK Frontend
 
-Welcome to the frontend repository for vibeCHECK, an innovative platform designed to bring you closer to your favorite celebrities. This project is currently in development, and we are excited to share our progress with you!
+VibeCHECK is a web-based application that allows users to analyze influencer behavior and public sentiment. Users can view content related to influencers, such as YouTube videos and comments, and vote whether the influencer's vibe is 'good' or 'bad.' The system analyzes scraped data from YouTube and stores it in a MySQL database. Users will be able to vote on influencer behavior based on publicly available content and comments in the future. (will be further developed to input datas from tmz too.)
 
-## Overview
+## Project Overview
 
-vibeCHECK aims to provide users with an engaging and interactive way to explore celebrity profiles, their latest updates, and more. Our goal is to create a seamless and user-friendly experience that keeps users coming back for more.
+vibeCHECK is an interactive platform that allows users to:
+- Search for celebrities
+- View real-time sentiment analysis
+- Participate in voting
+- Track media sentiment and viewer reactions
+- View recent news and community comments
 
-## Wireframe
+## Design Reference
 
-You can find the reference wireframe for our project on Figma:
-[Wireframe on Figma](https://www.figma.com/design/tnI1ROfsFqTrYPKUdABruG/vibeCheck?node-id=0-1&t=J6zagD8uAPXZi0q4-1)
+We started our planning process on Figma by designing a complete wireframe of what we expect the public user facing experience to look like. This mainly consists of the home page and the celebrity profile page. The Enterprise login flow was developed but we have yet to visualize the final dashboard for our celebrity clients.
+The application's design is based on [this Figma wireframe](https://www.figma.com/design/tnI1ROfsFqTrYPKUdABruG/vibeCheck?node-id=4-99&t=WS81IPDE2VkEVD72-1), which outlines:
+- We have only built out the Celebrity Profile page from this wireframe but we expect to implement the full experience at completion.
 
-Currently, we have only built out the **Celebrity Profile** page, which showcases detailed information and updates about various celebrities.
 
-## Technology Stack
+## Component Structure
 
-Our frontend is developed using modern web technologies:
-- HTML
-- CSS
-- JavaScript
-- React.js
+Under the guidance from the assignment instructions, we split the functionality of the profile page between multiple components that each provide a certain feature for the celebrity profile page.
 
-A significant portion of the frontend code was generated with the assistance of Claude 3.5 Sonnett, which greatly streamlined our development process.
+This development was heavily assisted with Claude 3.5 Sonnett. Human debugging was required although there may be some efficiencies/redundant/messy code we aim to clean up on final release.
 
-## Backend and API
+### App.js
+The main application container that:
+- Manages global state
+- Handles routing and component composition
+- Coordinates data flow between components
+- Maintains the overall layout and structure
 
-For the backend and API, please refer to the following repository:
-[Reference Backend and API](https://github.com/Kyrie21323/FinalProject)
+### SearchBar.js
+A search component that:
+- Fetches celebrity data from the API
+- Provides real-time search functionality
+- Returns matched celebrity information
+- Handles error states and loading conditions
 
-## Contributors
+### NewsSection.js
+Displays recent news and updates:
+- Fetches content from the API's /content endpoint
+- Filters content by celebrity ID
+- Shows the three most recent news items
+- Provides placeholder content when needed
 
-The primary contributors to the frontend development of this project are:
-- Ian Chen
-- Jessica Yu
+### RecentContent.js
+Manages user comments and interactions:
+- Pulls data from the API's /comments endpoint
+- Displays recent community feedback
+- Filters comments by celebrity ID
+- Shows placeholder content when no data is available
 
-We are committed to making vibeCHECK a success and welcome any feedback, suggestions, or contributions from the community.
+### VoteSection.js
+Handles user voting functionality:
+- Displays current vibe scores
+- Manages voting buttons
+- Shows good/bad vibe percentages
+- Integrates with the API for vote submission
+This has yet to be fully built out as it will require us to perform push calls to our API which is not fully set up yet. This will be completed by the final release.
 
-## Installation
-
-To get started with the frontend, follow these steps:
+## Installation and Setup
 
 1. Clone the repository:
-    ```sh
-    git clone https://github.com/ichen888/vibeCHECK-frontend.git
-    ```
-2. Navigate to the project directory:
-    ```sh
-    cd vibeCHECK-frontend
-    ```
-3. Install the dependencies:
-    ```sh
-    npm install
-    ```
-4. Start the development server:
-    ```sh
-    npm start
-    ```
+```bash
+git clone https://github.com/ichen888/vibeCHECK-frontend.git
+cd vibeCHECK-frontend
+```
 
-The application should now be running on `http://localhost:3000`.
+2. Install dependencies:
+```bash
+npm install
+```
+
+3. Create a `.env` file in the root directory:
+```
+REACT_APP_API_URL=http://localhost:8000
+```
+
+4. Start the development server:
+```bash
+npm start
+```
+
+5. Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+
+## Dependencies
+
+- React 18.x
+- React Router 6.x
+- Other dependencies can be found in package.json
+
+## Backend Integration
+
+This frontend application integrates with the [vibeCHECK Backend](https://github.com/Kyrie21323/FinalProject), which provides:
+- Celebrity data management
+- Sentiment analysis
+- Content aggregation
+- User interaction handling
+
+Ensure the backend server is running before starting the frontend application.
+
+## API Endpoints
+
+The application currently interacts with the following endpoints:
+
+- `GET /influencers`: Retrieves celebrity list
+- `GET /influencers/{id}`: Gets specific celebrity data
+- `GET /content`: Fetches news and updates
+- `GET /comments`: Retrieves user comments
+- `POST /votes`: Submits user votes (future implementation)
 
 ## License
 
-This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
+This project is licensed under the MIT License - see the LICENSE file for details.
 
----
+## Acknowledgments
 
-Feel free to reach out if you have any questions or need further assistance! Happy coding! 😊
+- Backend development by our team here (https://github.com/Kyrie21323/FinalProject)
+- UI/UX design reference from Figma
+- React.js community and documentation
+
+## Future Improvements
+
+- Implement user authentication
+- Add social media integration
+- Expand celebrity database
+- Enhance voting system
+- Add real-time updates
+- Implement comment functionality
+
+For more information about the backend implementation, visit the [Backend Repository](https://github.com/Kyrie21323/FinalProject).
+
+Citations:
+[1] https://github.com/ichen888/vibeCHECK-frontend.
