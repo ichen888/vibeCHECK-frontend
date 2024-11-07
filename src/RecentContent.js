@@ -23,7 +23,7 @@ const RecentContent = ({ influencerId }) => {
 
       try {
         setLoading(true);
-        const response = await fetch('http://localhost:8000/comments');
+        const response = await fetch('http://127.0.0.1:8000/comments');
         if (!response.ok) {
           throw new Error('Failed to fetch comments');
         }

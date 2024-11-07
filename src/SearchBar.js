@@ -10,9 +10,15 @@ const SearchBar = ({ onSearchResult }) => {
   useEffect(() => {
     const fetchInfluencerTable = async () => {
       try {
-        const response = await fetch('http://localhost:8000/influencers');
+        const response = await fetch(`http://127.0.0.1:8000/influencers`, {
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+          },
+        });
+        
         if (!response.ok) {
-          throw new Error('Failed to fetch data');
+          throw new Error(`HTTP error! status: ${response.status}`);
         }
         const data = await response.json();
         setInfluencerTable(data);
@@ -21,7 +27,7 @@ const SearchBar = ({ onSearchResult }) => {
         setError('Failed to load influencer data');
       }
     };
-
+  
     fetchInfluencerTable();
   }, []);
 
