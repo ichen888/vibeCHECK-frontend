@@ -1,15 +1,10 @@
 // App.js
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./App.css";
 import SearchBar from './SearchBar';
 import NewsSection from './NewsSection';
 import RecentContent from './RecentContent';
-
-const newsItems = [
-  { id: 1, title: "Headline 1", content: "Celebrity gains support with latest post." },
-  { id: 2, title: "Headline 2", content: "More news and updates on recent activities." },
-  { id: 3, title: "Headline 3", content: "Celebrity facing challenges in recent news." }
-];
+import VoteSection from './VoteSection';
 
 const recentContent = [
   { id: 1, title: "Post 1 - 56% Vibes", content: "Celebrity gains support with latest post." },
@@ -17,31 +12,52 @@ const recentContent = [
   { id: 3, title: "Post 3 - 95% Vibes", content: "Celebrity's latest appearance is a major hit." }
 ];
 
+const newsItems = [
+  { id: 1, title: "Headline 1", content: "Celebrity gains support with latest post." },
+  { id: 2, title: "Headline 2", content: "More news and updates on recent activities." },
+  { id: 3, title: "Headline 3", content: "Celebrity facing challenges in recent news." }
+];
+
 function App() {
-  const [selectedInfluencer, setSelectedInfluencer] = useState(null);
+  const [selectedInfluencerId, setSelectedInfluencerId] = useState(null);
+  const [influencerData, setInfluencerData] = useState(null);
   const [filteredNews, setFilteredNews] = useState(newsItems);
   const [filteredContent, setFilteredContent] = useState(recentContent);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
 
+  // Handle the search result from SearchBar
   const handleSearchResult = (influencer) => {
-    setSelectedInfluencer(influencer);
-    
     if (influencer) {
-      const query = influencer.name.toLowerCase();
-      const filteredNewsItems = newsItems.filter(
-        (item) => item.title.toLowerCase().includes(query) || 
-                  item.content.toLowerCase().includes(query)
-      );
-      const filteredRecentContent = recentContent.filter(
-        (item) => item.title.toLowerCase().includes(query) || 
-                  item.content.toLowerCase().includes(query)
-      );
-
-      setFilteredNews(filteredNewsItems);
-      setFilteredContent(filteredRecentContent);
+      setSelectedInfluencerId(influencer.id);
+      setInfluencerData(influencer);
     } else {
-      setFilteredNews(newsItems);
-      setFilteredContent(recentContent);
+      setSelectedInfluencerId(null);
+      setInfluencerData(null);
+      resetFilters();
     }
+  };
+
+  // Filter content based on influencer name
+  const filterContentByInfluencer = (name) => {
+    const query = name.toLowerCase();
+    const filteredNewsItems = newsItems.filter(
+      (item) => item.title.toLowerCase().includes(query) || 
+                item.content.toLowerCase().includes(query)
+    );
+    const filteredRecentContent = recentContent.filter(
+      (item) => item.title.toLowerCase().includes(query) || 
+                item.content.toLowerCase().includes(query)
+    );
+
+    setFilteredNews(filteredNewsItems);
+    setFilteredContent(filteredRecentContent);
+  };
+
+  // Reset filters when no influencer is selected
+  const resetFilters = () => {
+    setFilteredNews(newsItems);
+    setFilteredContent(recentContent);
   };
 
   return (
@@ -51,15 +67,18 @@ function App() {
         <SearchBar onSearchResult={handleSearchResult} />
       </header>
 
+      {loading && <div className="loading">Loading...</div>}
+      {error && <div className="error">{error}</div>}
+
       <div className="profile">
         <img src="https://via.placeholder.com/80" alt="Celebrity" />
-        {selectedInfluencer ? (
+        {influencerData ? (
           <>
-            <h2>{selectedInfluencer.name}</h2>
+            <h2>{influencerData.name}</h2>
             <div className="influencer-details">
-              <p>ID: {selectedInfluencer.id}</p>
+              <p>ID: {influencerData.id}</p>
               <div className="vibe-score">
-                Vibe Score: {selectedInfluencer.vibeScore}%
+                Vibe Score: {influencerData.vibeScore}%
               </div>
             </div>
           </>
@@ -72,18 +91,15 @@ function App() {
       </div>
 
       <div className="vibe-stats">
-        {selectedInfluencer && (
+        {influencerData && (
           <>
-            <div>{selectedInfluencer.vibeScore}% Good Vibes</div>
-            <div>{100 - selectedInfluencer.vibeScore}% Bad Vibes</div>
+            <div>{influencerData.vibeScore}% Good Vibes</div>
+            <div>{100 - influencerData.vibeScore}% Bad Vibes</div>
           </>
         )}
       </div>
 
-      <div className="vote-section">
-        <button>Good Vibes</button>
-        <button>Bad Vibes</button>
-      </div>
+      <VoteSection influencerId={selectedInfluencerId} />
 
       <div className="vibe-details">
         <div>
@@ -94,8 +110,8 @@ function App() {
         </div>
       </div>
 
-      <NewsSection filteredNews={filteredNews} />
-      <RecentContent filteredContent={filteredContent} />
+      <NewsSection influencerId={selectedInfluencerId} />
+      <RecentContent influencerId={selectedInfluencerId} />
     </div>
   );
 }

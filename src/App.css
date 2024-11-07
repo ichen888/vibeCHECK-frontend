@@ -169,3 +169,78 @@ body {
 .content-item button:hover {
   background-color: #666;
 }
+
+.vibe-section-container {
+  margin: 20px 0;
+}
+
+.vibe-section {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  background-color: #222; /* Changed to match dark theme */
+  border-radius: 8px;
+}
+
+.vibe-stat {
+  text-align: center;
+  font-size: 24px; /* Changed to match existing font sizes */
+  font-weight: bold;
+  color: #fff; /* Changed to match dark theme */
+  flex: 1;
+}
+
+.vote-buttons {
+  display: flex;
+  gap: 20px;
+  flex: 2;
+  justify-content: center;
+}
+
+.vibe-button {
+  padding: 12px 24px;
+  border: none;
+  border-radius: 25px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.vibe-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.good-vibe {
+  background-color: #28a745;
+  color: #fff;
+}
+
+.good-vibe:hover:not(:disabled) {
+  background-color: #218838;
+}
+
+.bad-vibe {
+  background-color: #dc3545;
+  color: #fff;
+}
+
+.bad-vibe:hover:not(:disabled) {
+  background-color: #c82333;
+}
+
+.loading {
+  text-align: center;
+  padding: 10px;
+  color: #bbb; /* Changed to match dark theme */
+}
+
+.error {
+  color: #dc3545;
+  text-align: center;
+  padding: 10px;
+  background-color: rgba(220, 53, 69, 0.1); /* Added semi-transparent background */
+  border-radius: 4px;
+}
