@@ -14,9 +14,14 @@ vibeCHECK is an interactive platform that allows users to:
 ## Design Reference
 
 We started our planning process on Figma by designing a complete wireframe of what we expect the public user facing experience to look like. This mainly consists of the home page and the celebrity profile page. The Enterprise login flow was developed but we have yet to visualize the final dashboard for our celebrity clients.
-The application's design is based on [this Figma wireframe](https://www.figma.com/design/tnI1ROfsFqTrYPKUdABruG/vibeCheck?node-id=4-99&t=WS81IPDE2VkEVD72-1), which outlines:
+The application's design is based on [this Figma wireframe](https://www.figma.com/design/tnI1ROfsFqTrYPKUdABruG/vibeCheck?node-id=4-99&t=WS81IPDE2VkEVD72-1), which outlines our final envisioned user experience.
 - We have only built out the Celebrity Profile page from this wireframe but we expect to implement the full experience at completion.
 
+![Figma Prototyping Wireframe](wireframe.png)
+
+Versus our Current React Prototype
+
+![React Prototype](reactprototype.png)
 
 ## Component Structure
 
@@ -107,7 +112,6 @@ Ensure the backend server is running before starting the frontend application.
 The application currently interacts with the following endpoints:
 
 - `GET /influencers`: Retrieves celebrity list
-- `GET /influencers/{id}`: Gets specific celebrity data
 - `GET /content`: Fetches news and updates
 - `GET /comments`: Retrieves user comments
 - `POST /votes`: Submits user votes (future implementation)
