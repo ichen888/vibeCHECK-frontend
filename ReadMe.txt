@@ -1,84 +1,72 @@
-# vibeCHECK Frontend
+Here's a comprehensive README for your GitHub repository:
 
-Welcome to the vibeCHECK frontend repository! This project is the front-end implementation for the Projects in Programming Final Project.
+---
 
-## Project Overview
+# vibeCHECK-frontend
 
-vibeCHECK is a web application designed to provide users with insights into celebrity profiles. Currently, we have implemented the Celebrity Profile page, with plans to expand the functionality in future iterations.
+Welcome to the frontend repository for vibeCHECK, an innovative platform designed to bring you closer to your favorite celebrities. This project is currently in development, and we are excited to share our progress with you!
 
-## Features
+## Overview
 
-- Celebrity Profile Page: View detailed information about selected celebrities.
+vibeCHECK aims to provide users with an engaging and interactive way to explore celebrity profiles, their latest updates, and more. Our goal is to create a seamless and user-friendly experience that keeps users coming back for more.
 
-## Design
+## Wireframe
 
-The user interface design for vibeCHECK is based on the following Figma wireframe:
+You can find the reference wireframe for our project on Figma:
+[Wireframe on Figma](https://www.figma.com/design/tnI1ROfsFqTrYPKUdABruG/vibeCheck?node-id=0-1&t=J6zagD8uAPXZi0q4-1)
 
-[vibeCHECK Figma Design](https://www.figma.com/design/tnI1ROfsFqTrYPKUdABruG/vibeCheck?node-id=0-1&t=J6zagD8uAPXZi0q4-1)
-
-Please refer to this design for visual guidance and layout specifications.
+Currently, we have only built out the **Celebrity Profile** page, which showcases detailed information and updates about various celebrities.
 
 ## Technology Stack
 
-- React.js
-- CSS
+Our frontend is developed using modern web technologies:
 - HTML
+- CSS
+- JavaScript
+- React.js
 
-## Development Process
+A significant portion of the frontend code was generated with the assistance of Claude 3.5 Sonnett, which greatly streamlined our development process.
 
-A significant portion of the front-end code for this project was generated using Claude 3.5 Sonnett, an AI language model. This approach allowed for rapid prototyping and development of the initial codebase.
+## Backend and API
 
-## Getting Started
+For the backend and API, please refer to the following repository:
+[Reference Backend and API](https://github.com/Kyrie21323/FinalProject)
 
-To get started with the vibeCHECK frontend, follow these steps:
+## Contributors
+
+The primary contributors to the frontend development of this project are:
+- Ian Chen
+- Jessica Yu
+
+We are committed to making vibeCHECK a success and welcome any feedback, suggestions, or contributions from the community.
+
+## Installation
+
+To get started with the frontend, follow these steps:
 
 1. Clone the repository:
-   ```bash
-   git clone https://github.com/ichen888/vibeCHECK-frontend.git
-   ```
-
+    ```sh
+    git clone https://github.com/ichen888/vibeCHECK-frontend.git
+    ```
 2. Navigate to the project directory:
-   ```bash
-   cd vibeCHECK-frontend
-   ```
-
-3. Install dependencies:
-   ```bash
-   npm install
-   ```
-
+    ```sh
+    cd vibeCHECK-frontend
+    ```
+3. Install the dependencies:
+    ```sh
+    npm install
+    ```
 4. Start the development server:
-   ```bash
-   npm start
-   ```
+    ```sh
+    npm start
+    ```
 
-5. Open your browser and visit `http://localhost:3000` to view the application.
-
-## Contributing
-
-We welcome contributions to the vibeCHECK frontend! If you'd like to contribute, please follow these steps:
-
-1. Fork the repository
-2. Create a new branch for your feature or bug fix
-3. Make your changes and commit them with descriptive commit messages
-4. Push your changes to your fork
-5. Submit a pull request to the main repository
-
-## Future Development
-
-Our roadmap includes expanding the application to include additional features and pages as outlined in the Figma design. Stay tuned for updates!
+The application should now be running on `http://localhost:3000`.
 
 ## License
 
-This project is licensed under the MIT License.
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
 
-## Contact
+---
 
-For any questions or concerns, please open an issue on this repository or contact the project maintainers directly.
-
-Thank you for your interest in vibeCHECK!
-
-Citations:
-[1] https://github.com/ichen888/vibeCHECK-frontend.
-[2] https://www.figma.com/design/tnI1ROfsFqTrYPKUdABruG/vibeCheck?node-id=0-1&t=J6zagD8uAPXZi0q4-1
-[3] https://github.com/ichen888/vibeCHECK-frontend
+Feel free to reach out if you have any questions or need further assistance! Happy coding! 😊
