@@ -8,21 +8,9 @@ const RecentContent = ({ influencerId }) => {
 
   // Placeholder comments for when no influencer is selected
   const placeholderComments = [
-    {
-      id: 1,
-      title: "Welcome to Comments",
-      content: "Search for a celebrity to see what people are saying."
-    },
-    {
-      id: 2,
-      title: "Community Feedback",
-      content: "Join the conversation and share your thoughts."
-    },
-    {
-      id: 3,
-      title: "Recent Discussions",
-      content: "Discover the latest opinions and reactions."
-    }
+    { id: 1, title: "Post 1 - 56% Vibes", content: "Celebrity gains support with latest post." },
+    { id: 2, title: "Post 2 - 44% Vibes", content: "Recent news affecting vibes significantly." },
+    { id: 3, title: "Post 3 - 95% Vibes", content: "Celebrity's latest appearance is a major hit." }
   ];
 
   useEffect(() => {
