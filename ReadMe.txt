@@ -1,7 +1,3 @@
-Here's a comprehensive README for your GitHub repository:
-
----
-
 # vibeCHECK-frontend
 
 Welcome to the frontend repository for vibeCHECK, an innovative platform designed to bring you closer to your favorite celebrities. This project is currently in development, and we are excited to share our progress with you!
