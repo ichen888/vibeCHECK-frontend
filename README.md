@@ -107,7 +107,6 @@ Ensure the backend server is running before starting the frontend application.
 The application currently interacts with the following endpoints:
 
 - `GET /influencers`: Retrieves celebrity list
-- `GET /influencers/{id}`: Gets specific celebrity data
 - `GET /content`: Fetches news and updates
 - `GET /comments`: Retrieves user comments
 - `POST /votes`: Submits user votes (future implementation)
