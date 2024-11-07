@@ -1,0 +1,45 @@
+.stats-card,
+.stats-card * {
+  box-sizing: border-box;
+}
+.stats-card {
+  background: var(--var-sds-color-background-default-default, #ffffff);
+  border-radius: var(--var-sds-size-radius-200, 8px);
+  border-style: solid;
+  border-color: var(--var-sds-color-border-default-default, #d9d9d9);
+  border-width: 1px;
+  padding: var(--var-sds-size-space-600, 24px);
+  display: flex;
+  flex-direction: column;
+  gap: var(--var-sds-size-space-600, 24px);
+  align-items: center;
+  justify-content: flex-start;
+  min-width: 240px;
+  position: relative;
+}
+.stats-card .review-body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--var-sds-size-space-100, 4px);
+  align-items: center;
+  justify-content: flex-start;
+  align-self: stretch;
+  flex-shrink: 0;
+  position: relative;
+}
+.stats-card .text-heading-instance {
+  justify-content: center !important;
+  align-self: stretch !important;
+  flex-shrink: 0 !important;
+}
+.stats-card .text-instance {
+  justify-content: center !important;
+  align-self: stretch !important;
+  flex-shrink: 0 !important;
+}
+
+/* nested override styles */
+.stats-card .clock-instance {
+  width: 40px !important;
+  height: 40px !important;
+}

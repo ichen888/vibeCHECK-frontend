@@ -1,0 +1,10 @@
+.log-in-size-48,
+.log-in-size-48 * {
+  box-sizing: border-box;
+}
+.log-in-size-48 {
+  width: 48px;
+  height: 48px;
+  position: relative;
+  overflow: visible;
+}

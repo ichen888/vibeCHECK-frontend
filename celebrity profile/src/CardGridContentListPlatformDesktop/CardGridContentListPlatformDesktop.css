@@ -1,0 +1,33 @@
+.card-grid-content-list-platform-desktop,
+.card-grid-content-list-platform-desktop * {
+  box-sizing: border-box;
+}
+.card-grid-content-list-platform-desktop {
+  background: var(--var-sds-color-background-default-default, #ffffff);
+  padding: var(--var-sds-size-space-1600, 64px);
+  display: flex;
+  flex-direction: column;
+  gap: var(--var-sds-size-space-1200, 48px);
+  align-items: flex-start;
+  justify-content: flex-start;
+  position: relative;
+}
+.card-grid-content-list-platform-desktop .text-content-heading-instance {
+  flex-shrink: 0 !important;
+}
+.card-grid-content-list-platform-desktop .cards {
+  display: flex;
+  flex-direction: column;
+  gap: var(--var-sds-size-space-600, 24px);
+  align-items: flex-start;
+  justify-content: flex-start;
+  align-self: stretch;
+  flex-shrink: 0;
+  position: relative;
+}
+.card-grid-content-list-platform-desktop .card-instance {
+  align-self: stretch !important;
+  flex-shrink: 0 !important;
+}
+
+/* nested override styles */

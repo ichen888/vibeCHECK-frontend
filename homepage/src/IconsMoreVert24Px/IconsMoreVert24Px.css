@@ -1,0 +1,11 @@
+.icons-more-vert-24-px,
+.icons-more-vert-24-px * {
+  box-sizing: border-box;
+}
+.icons-more-vert-24-px {
+  flex-shrink: 0;
+  width: 24px;
+  height: 24px;
+  position: relative;
+  overflow: visible;
+}

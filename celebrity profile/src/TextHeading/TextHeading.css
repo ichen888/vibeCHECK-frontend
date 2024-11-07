@@ -1,0 +1,22 @@
+.text-heading,
+.text-heading * {
+  box-sizing: border-box;
+}
+.text-heading {
+  display: flex;
+  flex-direction: row;
+  gap: 0px;
+  align-items: flex-start;
+  justify-content: flex-start;
+  position: relative;
+}
+.text-heading .text-heading2 {
+  color: var(--var-sds-color-text-default-default, #1e1e1e);
+  text-align: left;
+  font-family: var(--heading-font-family, "Inter-SemiBold", sans-serif);
+  font-size: var(--heading-font-size, 24px);
+  line-height: var(--heading-line-height, 120%);
+  letter-spacing: var(--heading-letter-spacing, -0.02em);
+  font-weight: var(--heading-font-weight, 600);
+  position: relative;
+}

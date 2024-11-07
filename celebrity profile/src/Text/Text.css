@@ -1,0 +1,21 @@
+.text,
+.text * {
+  box-sizing: border-box;
+}
+.text {
+  display: flex;
+  flex-direction: row;
+  gap: 0px;
+  align-items: flex-start;
+  justify-content: flex-start;
+  position: relative;
+}
+.text .text2 {
+  color: var(--var-sds-color-text-default-default, #1e1e1e);
+  text-align: left;
+  font-family: var(--body-base-font-family, "Inter-Regular", sans-serif);
+  font-size: var(--body-base-font-size, 16px);
+  line-height: var(--body-base-line-height, 140%);
+  font-weight: var(--body-base-font-weight, 400);
+  position: relative;
+}

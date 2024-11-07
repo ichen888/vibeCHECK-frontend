@@ -1,0 +1,50 @@
+.login-page,
+.login-page * {
+  box-sizing: border-box;
+}
+.login-page {
+  background: #2c2c2c;
+  height: 1117px;
+  position: relative;
+  overflow: hidden;
+}
+.login-page .form-log-in {
+  display: flex;
+  flex-direction: column;
+  gap: 0px;
+  align-items: flex-start;
+  justify-content: flex-start;
+  position: absolute;
+  left: 704px;
+  top: 558px;
+}
+.login-page .form-log-in-instance {
+  flex-shrink: 0 !important;
+  width: 320px !important;
+  height: 322px !important;
+}
+.login-page .vibe-check-pro {
+  color: #ffffff;
+  text-align: center;
+  font-family: "Jersey25-Regular", sans-serif;
+  font-size: 128px;
+  font-weight: 400;
+  position: absolute;
+  left: 417px;
+  top: 296px;
+  width: 894px;
+  height: 171px;
+}
+.login-page
+  .complete-fan-insights-powered-by-data-analysis-ai-coming-soon-announcement-tbd {
+  color: #ffffff;
+  text-align: center;
+  font-family: "Jersey25-Regular", sans-serif;
+  font-size: 40px;
+  font-weight: 400;
+  position: absolute;
+  left: 417px;
+  top: 422px;
+  width: 894px;
+  height: 171px;
+}

@@ -1,0 +1,312 @@
+.celebrity-profile,
+.celebrity-profile * {
+  box-sizing: border-box;
+}
+.celebrity-profile {
+  background: #000000;
+  height: 2000px;
+  position: relative;
+  overflow: hidden;
+}
+.celebrity-profile .stats-card-instance {
+  border-radius: 11.72px !important;
+  min-width: 381.2px !important;
+  position: absolute !important;
+  left: 886px !important;
+  top: 722px !important;
+}
+.celebrity-profile .stats-card-instance2 {
+  border-radius: 12.19px !important;
+  min-width: 384px !important;
+  position: absolute !important;
+  left: 461px !important;
+  top: 722px !important;
+}
+.celebrity-profile .info-card {
+  position: absolute;
+  inset: 0;
+}
+.celebrity-profile .celebrity-name {
+  color: #ffffff;
+  text-align: left;
+  font-family: "Jersey25-Regular", sans-serif;
+  font-size: 57.39130401611328px;
+  line-height: 140%;
+  font-weight: 400;
+  position: absolute;
+  left: 615px;
+  top: 207px;
+  width: 339px;
+  height: 74px;
+}
+.celebrity-profile .profession {
+  color: #d9d9d9;
+  text-align: left;
+  font-family: "Jersey25-Regular", sans-serif;
+  font-size: 32px;
+  line-height: 140%;
+  font-weight: 400;
+  position: absolute;
+  left: 617px;
+  top: 273px;
+  width: 280px;
+  height: 16px;
+}
+.celebrity-profile .nationality-age {
+  color: #d9d9d9;
+  text-align: left;
+  font-family: "Jersey25-Regular", sans-serif;
+  font-size: 32px;
+  line-height: 140%;
+  font-weight: 400;
+  position: absolute;
+  left: 617px;
+  top: 305px;
+  width: 280px;
+  height: 16px;
+}
+.celebrity-profile .avatar-instance {
+  border-radius: 26137.74px !important;
+  border-style: solid !important;
+  border-color: #000000 !important;
+  border-width: 1px !important;
+  width: 149px !important;
+  height: 149px !important;
+  position: absolute !important;
+  left: 439px !important;
+  top: 199px !important;
+  box-shadow: 0px 1.07px 1.07px 0px rgba(0, 0, 0, 0.25) !important;
+}
+.celebrity-profile .search-bar-instance {
+  background: var(--schemes-surface-container-highest, #e6e0e9) !important;
+  width: 360px !important;
+  position: absolute !important;
+  left: 665px !important;
+  top: 59px !important;
+}
+.celebrity-profile .group-2 {
+  position: absolute;
+  inset: 0;
+}
+.celebrity-profile .vibe-check {
+  color: #ffffff;
+  text-align: left;
+  font-family: "Jersey25-Regular", sans-serif;
+  font-size: 60px;
+  font-weight: 400;
+  position: absolute;
+  left: 99px;
+  top: 56px;
+  width: 272px;
+  height: 59px;
+}
+.celebrity-profile .log-in-instance {
+  position: absolute !important;
+  left: 1527px !important;
+  top: 63px !important;
+  flex-shrink: unset !important;
+}
+.celebrity-profile .home-instance {
+  position: absolute !important;
+  left: 1597px !important;
+  top: 63px !important;
+  flex-shrink: unset !important;
+}
+.celebrity-profile ._56 {
+  color: #ffffff;
+  text-align: left;
+  font-family: "Jersey25-Regular", sans-serif;
+  font-size: 126.6956558227539px;
+  line-height: 140%;
+  font-weight: 400;
+  position: absolute;
+  left: 1091.27px;
+  top: 172px;
+  width: 278.73px;
+  height: 116.89px;
+}
+.celebrity-profile ._562 {
+  color: #ffffff;
+  text-align: right;
+  font-family: "Jersey25-Regular", sans-serif;
+  font-size: 100px;
+  line-height: 140%;
+  font-weight: 400;
+  position: absolute;
+  left: 279px;
+  top: 482px;
+  width: 278.73px;
+  height: 116.89px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+.celebrity-profile ._44 {
+  color: #ffffff;
+  text-align: left;
+  font-family: "Jersey25-Regular", sans-serif;
+  font-size: 100px;
+  line-height: 140%;
+  font-weight: 400;
+  position: absolute;
+  left: 1169px;
+  top: 482px;
+  width: 278.73px;
+  height: 116.89px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+.celebrity-profile .good-vibes {
+  color: #ffffff;
+  text-align: right;
+  font-family: "Jersey25-Regular", sans-serif;
+  font-size: 40.86956787109375px;
+  line-height: 140%;
+  font-weight: 400;
+  position: absolute;
+  left: 1088px;
+  top: 325.67px;
+  width: 208.43px;
+  height: 31.06px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-end;
+}
+.celebrity-profile .media-feed {
+  position: absolute;
+  inset: 0;
+}
+.celebrity-profile .card-grid-content-list-instance {
+  background: var(
+    --var-sds-color-background-utilities-blanket,
+    rgba(0, 0, 0, 0.7)
+  ) !important;
+  padding: var(--var-sds-size-space-1600, 50.45px) !important;
+  gap: var(--var-sds-size-space-1200, 37.84px) !important;
+  width: 458px !important;
+  height: 641px !important;
+  position: absolute !important;
+  left: 424px !important;
+  top: 1056px !important;
+}
+.celebrity-profile .what-s-in-the-news {
+  color: #ffffff;
+  text-align: center;
+  font-family: "Jersey25-Regular", sans-serif;
+  font-size: 40.86956787109375px;
+  line-height: 140%;
+  font-weight: 400;
+  position: absolute;
+  left: 478.1px;
+  top: 1056px;
+  width: 349.8px;
+  height: 31px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.celebrity-profile .card-grid-content-list-instance2 {
+  background: var(
+    --var-sds-color-background-utilities-blanket,
+    rgba(0, 0, 0, 0.7)
+  ) !important;
+  padding: var(--var-sds-size-space-1600, 50.45px) !important;
+  gap: var(--var-sds-size-space-1200, 37.84px) !important;
+  width: 458px !important;
+  height: 641px !important;
+  position: absolute !important;
+  left: 848px !important;
+  top: 1056px !important;
+}
+.celebrity-profile .recent-content {
+  color: #ffffff;
+  text-align: center;
+  font-family: "Jersey25-Regular", sans-serif;
+  font-size: 40.86956787109375px;
+  line-height: 140%;
+  font-weight: 400;
+  position: absolute;
+  left: 902.1px;
+  top: 1056px;
+  width: 349.8px;
+  height: 31px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.celebrity-profile .vibecheck-vote {
+  display: flex;
+  flex-direction: row;
+  gap: var(--var-sds-size-space-400, 36.73px);
+  align-items: center;
+  justify-content: flex-start;
+  width: 551px;
+  position: absolute;
+  left: 588px;
+  top: 494px;
+}
+.celebrity-profile .button-instance {
+  background: #e3e3e3 !important;
+  border-radius: 17.09px !important;
+  padding: var(--var-sds-size-space-300, 27.55px) !important;
+  gap: var(--var-sds-size-space-200, 18.37px) !important;
+  flex: 1 !important;
+}
+.celebrity-profile .button-instance2 {
+  border-radius: 17.09px !important;
+  border-width: 2.3px !important;
+  padding: var(--var-sds-size-space-300, 27.55px) !important;
+  gap: var(--var-sds-size-space-200, 18.37px) !important;
+  flex: 1 !important;
+}
+.celebrity-profile .what-s-your-vote {
+  color: #ffffff;
+  text-align: center;
+  font-family: "Jersey25-Regular", sans-serif;
+  font-size: 50px;
+  line-height: 140%;
+  font-weight: 400;
+  position: absolute;
+  left: 689px;
+  top: 417px;
+  width: 349.8px;
+  height: 31px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.celebrity-profile .the-vibes-in-depth {
+  color: #ffffff;
+  text-align: center;
+  font-family: "Jersey25-Regular", sans-serif;
+  font-size: 50px;
+  line-height: 140%;
+  font-weight: 400;
+  position: absolute;
+  left: 659px;
+  top: 641px;
+  width: 409px;
+  height: 31px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* nested override styles */
+.celebrity-profile .users-instance {
+  width: 63.53px !important;
+  height: 63.53px !important;
+}
+.celebrity-profile .globe-instance {
+  width: 64px !important;
+  height: 64px !important;
+}
+.celebrity-profile .star-instance {
+  width: 36.73px !important;
+  height: 36.73px !important;
+}
+.celebrity-profile .x-instance {
+  width: 36.73px !important;
+  height: 36.73px !important;
+}

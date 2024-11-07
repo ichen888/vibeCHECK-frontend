@@ -1,0 +1,30 @@
+.button-variant-subtle-state-default-size-medium,
+.button-variant-subtle-state-default-size-medium * {
+  box-sizing: border-box;
+}
+.button-variant-subtle-state-default-size-medium {
+  border-radius: var(--var-sds-size-radius-200, 8px);
+  padding: var(--var-sds-size-space-300, 12px);
+  display: flex;
+  flex-direction: row;
+  gap: var(--var-sds-size-space-200, 8px);
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+}
+.button-variant-subtle-state-default-size-medium .button {
+  color: var(--var-sds-color-text-neutral-default, #303030);
+  text-align: left;
+  font-family: var(
+    --single-line-body-base-font-family,
+    "Inter-Regular",
+    sans-serif
+  );
+  font-size: var(--single-line-body-base-font-size, 16px);
+  line-height: var(--single-line-body-base-line-height, 100%);
+  font-weight: var(--single-line-body-base-font-weight, 400);
+  position: relative;
+}
+
+/* nested override styles */

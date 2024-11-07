@@ -1,0 +1,18 @@
+.button-group-align-start,
+.button-group-align-start * {
+  box-sizing: border-box;
+}
+.button-group-align-start {
+  display: flex;
+  flex-direction: row;
+  gap: var(--var-sds-size-space-400, 16px);
+  align-items: center;
+  justify-content: flex-start;
+  width: 240px;
+  position: relative;
+}
+.button-group-align-start .button-instance {
+  flex-shrink: 0 !important;
+}
+
+/* nested override styles */

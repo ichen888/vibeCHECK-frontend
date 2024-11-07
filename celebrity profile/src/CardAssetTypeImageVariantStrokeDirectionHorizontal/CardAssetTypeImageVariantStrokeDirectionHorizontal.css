@@ -1,0 +1,93 @@
+.card-asset-type-image-variant-stroke-direction-horizontal,
+.card-asset-type-image-variant-stroke-direction-horizontal * {
+  box-sizing: border-box;
+}
+.card-asset-type-image-variant-stroke-direction-horizontal {
+  background: var(--var-sds-color-background-default-default, #ffffff);
+  border-radius: var(--var-sds-size-radius-200, 8px);
+  border-style: solid;
+  border-color: var(--var-sds-color-border-default-default, #d9d9d9);
+  border-width: 1px;
+  padding: var(--var-sds-size-space-600, 24px);
+  display: flex;
+  flex-direction: row;
+  gap: var(--var-sds-size-space-600, 24px);
+  row-gap: 24px;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  align-content: flex-start;
+  min-width: 240px;
+  position: relative;
+}
+.card-asset-type-image-variant-stroke-direction-horizontal .image {
+  background: var(
+    --image-placeholder,
+    linear-gradient(to left, #e3e3e3, #e3e3e3)
+  );
+  display: flex;
+  flex-direction: column;
+  gap: 0px;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 160px;
+  height: 160px;
+  min-width: 160px;
+  position: relative;
+  overflow: hidden;
+  object-fit: cover;
+}
+.card-asset-type-image-variant-stroke-direction-horizontal .body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--var-sds-size-space-400, 16px);
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex: 1;
+  min-width: 160px;
+  position: relative;
+}
+.card-asset-type-image-variant-stroke-direction-horizontal .text {
+  display: flex;
+  flex-direction: column;
+  gap: var(--var-sds-size-space-200, 8px);
+  align-items: flex-start;
+  justify-content: flex-start;
+  align-self: stretch;
+  flex-shrink: 0;
+  position: relative;
+}
+.card-asset-type-image-variant-stroke-direction-horizontal .title {
+  color: var(--var-sds-color-text-default-default, #1e1e1e);
+  text-align: left;
+  font-family: var(--heading-font-family, "Inter-SemiBold", sans-serif);
+  font-size: var(--heading-font-size, 24px);
+  line-height: var(--heading-line-height, 120%);
+  letter-spacing: var(--heading-letter-spacing, -0.02em);
+  font-weight: var(--heading-font-weight, 600);
+  position: relative;
+  align-self: stretch;
+}
+.card-asset-type-image-variant-stroke-direction-horizontal
+  .body-text-for-whatever-you-d-like-to-say-add-main-takeaway-points-quotes-anecdotes-or-even-a-very-very-short-story {
+  color: var(--var-sds-color-text-default-secondary, #757575);
+  text-align: left;
+  font-family: var(--body-base-font-family, "Inter-Regular", sans-serif);
+  font-size: var(--body-base-font-size, 16px);
+  line-height: var(--body-base-line-height, 140%);
+  font-weight: var(--body-base-font-weight, 400);
+  position: relative;
+  align-self: stretch;
+}
+.card-asset-type-image-variant-stroke-direction-horizontal
+  .button-group-instance {
+  align-self: stretch !important;
+  flex-shrink: 0 !important;
+  width: unset !important;
+}
+
+/* nested override styles */
+.card-asset-type-image-variant-stroke-direction-horizontal .button-instance {
+  flex-shrink: 0 !important;
+}

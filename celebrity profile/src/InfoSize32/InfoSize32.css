@@ -1,0 +1,11 @@
+.info-size-32,
+.info-size-32 * {
+  box-sizing: border-box;
+}
+.info-size-32 {
+  flex-shrink: 0;
+  width: 32px;
+  height: 32px;
+  position: relative;
+  overflow: visible;
+}

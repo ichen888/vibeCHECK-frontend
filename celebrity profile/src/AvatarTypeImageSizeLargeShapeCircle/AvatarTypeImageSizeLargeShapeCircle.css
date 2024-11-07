@@ -1,0 +1,19 @@
+.avatar-type-image-size-large-shape-circle,
+.avatar-type-image-size-large-shape-circle * {
+  box-sizing: border-box;
+}
+.avatar-type-image-size-large-shape-circle {
+  border-radius: var(--var-sds-size-radius-full, 9999px);
+  width: var(--var-sds-size-icon-large, 40px);
+  height: var(--var-sds-size-icon-large, 40px);
+  position: relative;
+  overflow: hidden;
+}
+.avatar-type-image-size-large-shape-circle .shape {
+  width: 40px;
+  height: 40px;
+  position: absolute;
+  left: calc(50% - 20px);
+  top: calc(50% - 20px);
+  object-fit: cover;
+}
