@@ -58,6 +58,7 @@ Handles user voting functionality:
 - Manages voting buttons
 - Shows good/bad vibe percentages
 - Integrates with the API for vote submission
+
 This has yet to be fully built out as it will require us to perform push calls to our API which is not fully set up yet. This will be completed by the final release.
 
 ## Installation and Setup
