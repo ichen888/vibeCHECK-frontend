@@ -17,6 +17,7 @@ We started our planning process on Figma by designing a complete wireframe of wh
 The application's design is based on [this Figma wireframe](https://www.figma.com/design/tnI1ROfsFqTrYPKUdABruG/vibeCheck?node-id=4-99&t=WS81IPDE2VkEVD72-1), which outlines our final envisioned user experience.
 - We have only built out the Celebrity Profile page from this wireframe but we expect to implement the full experience at completion.
 
+![Figma Prototyping Wireframe](wireframe.png)
 
 ## Component Structure
 
