@@ -41,9 +41,9 @@ const NewsSection = ({ influencerId }) => {
         }
         const data = await response.json();
 
-        // Filter content by influencer_id and get the most recent 3 items
+        // Filter content by influencer_id and platform 'TMZ', get the most recent 3 items
         const filteredContent = data
-          .filter(item => item.influencer_id === influencerId)
+          .filter(item => item.influencer_id === influencerId && item.platform === 'TMZ') // Filter by TMZ platform
           .sort((a, b) => b.id - a.id)
           .slice(0, 3)
           .map(item => ({

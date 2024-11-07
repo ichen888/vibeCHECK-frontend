@@ -2,67 +2,78 @@
 import React, { useState, useEffect } from 'react';
 
 const RecentContent = ({ influencerId }) => {
-  const [comments, setComments] = useState([]);
+  const [contentItems, setContentItems] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  // Placeholder comments for when no influencer is selected
-  const placeholderComments = [
+  // Placeholder content for when no influencer is selected
+  const placeholderContent = [
     { id: 1, title: "Post 1 - 56% Vibes", content: "Celebrity gains support with latest post." },
     { id: 2, title: "Post 2 - 44% Vibes", content: "Recent news affecting vibes significantly." },
     { id: 3, title: "Post 3 - 95% Vibes", content: "Celebrity's latest appearance is a major hit." }
   ];
 
   useEffect(() => {
-    const fetchComments = async () => {
+    const fetchContent = async () => {
       if (!influencerId) {
-        setComments(placeholderComments);
+        setContentItems(placeholderContent);
         setLoading(false);
         return;
       }
 
       try {
         setLoading(true);
-        const response = await fetch('http://127.0.0.1:8000/comments');
+        const response = await fetch('http://127.0.0.1:8000/content');
         if (!response.ok) {
-          throw new Error('Failed to fetch comments');
+          throw new Error('Failed to fetch content');
         }
         const data = await response.json();
 
-        // Filter comments by influencer_id and get the most recent 3
-        const filteredComments = data
-          .filter(comment => comment.influencer_id === influencerId)
+        // Filter content by influencer_id and platform "YouTube", and get the most recent 3 items
+        const filteredContent = data
+          .filter(item => item.influencer_id === influencerId && item.platform === 'YouTube') // Filter for YouTube content
           .sort((a, b) => b.id - a.id)
           .slice(0, 3)
-          .map(comment => ({
-            id: comment.id,
-            title: `Comment #${comment.id}`,
-            content: comment.content
+          .map(item => ({
+            id: item.id,
+            title: item.title,
+            content: `Platform: ${item.platform}`,
+            url: item.url
           }));
 
-        setComments(filteredComments.length > 0 ? filteredComments : placeholderComments);
+        setContentItems(filteredContent.length > 0 ? filteredContent : placeholderContent);
       } catch (err) {
-        console.error('Error fetching comments:', err);
-        setError('Failed to load comments');
-        setComments(placeholderComments); // Show placeholder content on error
+        console.error('Error fetching content:', err);
+        setError('Failed to load content');
+        setContentItems(placeholderContent); // Show placeholder content on error
       } finally {
         setLoading(false);
       }
     };
 
-    fetchComments();
+    fetchContent();
   }, [influencerId]);
 
-  if (loading) return <div>Loading comments...</div>;
+  if (loading) return <div>Loading content...</div>;
   if (error) return <div className="error">{error}</div>;
 
   return (
     <section className="content-section">
-      <h3>Recent Comments</h3>
-      {comments.map((comment) => (
-        <div key={comment.id} className="content-item">
-          <h4>{comment.title}</h4>
-          <p>{comment.content}</p>
+      <h3>Recent YouTube Content</h3>
+      {contentItems.map((item) => (
+        <div key={item.id} className="content-item">
+          <h4>{item.title}</h4>
+          <p>{item.content}</p>
+          {item.url && (
+            <a 
+              href={item.url} 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="read-more-button"
+            >
+              Watch on YouTube
+            </a>
+          )}
         </div>
       ))}
     </section>
