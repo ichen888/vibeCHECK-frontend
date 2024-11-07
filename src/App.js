@@ -1,7 +1,9 @@
 // App.js
-
 import React, { useState } from "react";
 import "./App.css";
+import SearchBar from './SearchBar';
+import NewsSection from './NewsSection';
+import RecentContent from './RecentContent';
 
 const newsItems = [
   { id: 1, title: "Headline 1", content: "Celebrity gains support with latest post." },
@@ -16,48 +18,66 @@ const recentContent = [
 ];
 
 function App() {
-  const [searchQuery, setSearchQuery] = useState("");
+  const [selectedInfluencer, setSelectedInfluencer] = useState(null);
   const [filteredNews, setFilteredNews] = useState(newsItems);
   const [filteredContent, setFilteredContent] = useState(recentContent);
 
-  const handleSearch = (event) => {
-    const query = event.target.value.toLowerCase();
-    setSearchQuery(query);
+  const handleSearchResult = (influencer) => {
+    setSelectedInfluencer(influencer);
+    
+    if (influencer) {
+      const query = influencer.name.toLowerCase();
+      const filteredNewsItems = newsItems.filter(
+        (item) => item.title.toLowerCase().includes(query) || 
+                  item.content.toLowerCase().includes(query)
+      );
+      const filteredRecentContent = recentContent.filter(
+        (item) => item.title.toLowerCase().includes(query) || 
+                  item.content.toLowerCase().includes(query)
+      );
 
-    // Filter news items and recent content based on the search query
-    const filteredNewsItems = newsItems.filter(
-      (item) => item.title.toLowerCase().includes(query) || item.content.toLowerCase().includes(query)
-    );
-    const filteredRecentContent = recentContent.filter(
-      (item) => item.title.toLowerCase().includes(query) || item.content.toLowerCase().includes(query)
-    );
-
-    setFilteredNews(filteredNewsItems);
-    setFilteredContent(filteredRecentContent);
+      setFilteredNews(filteredNewsItems);
+      setFilteredContent(filteredRecentContent);
+    } else {
+      setFilteredNews(newsItems);
+      setFilteredContent(recentContent);
+    }
   };
 
   return (
     <div className="container">
       <header className="header">
         <h1>vibeCHECK</h1>
-        <input
-          type="text"
-          className="search-bar"
-          placeholder="Who's the Celebrity?"
-          value={searchQuery}
-          onChange={handleSearch}
-        />
+        <SearchBar onSearchResult={handleSearchResult} />
       </header>
 
       <div className="profile">
         <img src="https://via.placeholder.com/80" alt="Celebrity" />
-        <h2>Celebrity Name</h2>
-        <p>Profession, Nationality & Age</p>
+        {selectedInfluencer ? (
+          <>
+            <h2>{selectedInfluencer.name}</h2>
+            <div className="influencer-details">
+              <p>ID: {selectedInfluencer.id}</p>
+              <div className="vibe-score">
+                Vibe Score: {selectedInfluencer.vibeScore}%
+              </div>
+            </div>
+          </>
+        ) : (
+          <>
+            <h2>Search for a Celebrity</h2>
+            <p>Enter a name to see their vibe score</p>
+          </>
+        )}
       </div>
 
       <div className="vibe-stats">
-        <div>56% Good Vibes</div>
-        <div>44% Bad Vibes</div>
+        {selectedInfluencer && (
+          <>
+            <div>{selectedInfluencer.vibeScore}% Good Vibes</div>
+            <div>{100 - selectedInfluencer.vibeScore}% Bad Vibes</div>
+          </>
+        )}
       </div>
 
       <div className="vote-section">
@@ -74,26 +94,8 @@ function App() {
         </div>
       </div>
 
-      <section className="news-section">
-        <h3>What's in the news?</h3>
-        {filteredNews.map((item) => (
-          <div key={item.id} className="news-item">
-            <h4>{item.title}</h4>
-            <p>{item.content}</p>
-            <button>Read More</button>
-          </div>
-        ))}
-      </section>
-
-      <section className="content-section">
-        <h3>Recent Content</h3>
-        {filteredContent.map((item) => (
-          <div key={item.id} className="content-item">
-            <h4>{item.title}</h4>
-            <p>{item.content}</p>
-          </div>
-        ))}
-      </section>
+      <NewsSection filteredNews={filteredNews} />
+      <RecentContent filteredContent={filteredContent} />
     </div>
   );
 }
