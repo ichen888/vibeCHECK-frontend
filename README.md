@@ -19,6 +19,10 @@ The application's design is based on [this Figma wireframe](https://www.figma.co
 
 ![Figma Prototyping Wireframe](wireframe.png)
 
+Versus our Current React Prototype
+
+![React Prototype](wireframe.png)
+
 ## Component Structure
 
 Under the guidance from the assignment instructions, we split the functionality of the profile page between multiple components that each provide a certain feature for the celebrity profile page.
