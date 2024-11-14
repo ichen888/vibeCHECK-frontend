@@ -1,9 +1,10 @@
 // Homepage.js
 import React from "react";
+import { useNavigate } from 'react-router-dom'; // Import useNavigate
 import "./Homepage.css";
 
 const influencers = [
-  { id: 1, name: "Taylor Swift", image: "https://cdn.prod.website-files.com/61e1db1c178256e11be974b0/63f91e8829fbd0aaf9de4cb8_htygWn9bAtmW8KF52-4zwtXFzTwiA9dfZ4Q_custom_logo.png" },
+  { id: 19, name: "Taylor Swift", image: "https://cdn.prod.website-files.com/61e1db1c178256e11be974b0/63f91e8829fbd0aaf9de4cb8_htygWn9bAtmW8KF52-4zwtXFzTwiA9dfZ4Q_custom_logo.png" },
   { id: 2, name: "Kanye West", image: "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5c/Kanye_West_at_the_2009_Tribeca_Film_Festival_%28crop_2%29.jpg/1200px-Kanye_West_at_the_2009_Tribeca_Film_Festival_%28crop_2%29.jpg" },
   { id: 3, name: "MrBeast", image: "https://upload.wikimedia.org/wikipedia/commons/c/ce/MrBeast_2023_%28cropped%29.jpg" },
   { id: 4, name: "The Weeknd", image: "https://www.rollingstone.com/wp-content/uploads/2020/02/THE-WEEKND-by-Duncan-Loudon.jpg?w=1581&h=1054&crop=1" },
@@ -21,11 +22,19 @@ const influencers = [
   { id: 16, name: "Mark Wahlberg", image: "https://cdn.britannica.com/32/181632-004-51372707/Mark-Wahlberg-producer.jpg" },
   { id: 17, name: "Joe Rogan", image: "https://i.guim.co.uk/img/media/45727c83d4615bd841d191bf4329a019ea37cd2f/1_335_2069_1242/master/2069.jpg?width=1200&height=1200&quality=85&auto=format&fit=crop&s=9abc3c620f00b6c4e63be993cc98e3d7" },
   { id: 18, name: "Chris Brown", image: "https://static.standard.co.uk/2023/11/08/13/09/Chris%20Brown-xasooju6.jpeg?trim=0,52,85,56&quality=75&auto=webp&width=1000" },
-  { id: 19, name: "Lady Gaga", image: "https://hips.hearstapps.com/hmg-prod/images/lady-gaga-attends-the-64th-annual-grammy-awards-at-mgm-news-photo-1727455427.jpg?crop=1.00xw:0.667xh;0,0.0477xh&resize=640:*" },
+  { id: 21, name: "Lady Gaga", image: "https://hips.hearstapps.com/hmg-prod/images/lady-gaga-attends-the-64th-annual-grammy-awards-at-mgm-news-photo-1727455427.jpg?crop=1.00xw:0.667xh;0,0.0477xh&resize=640:*" },
   { id: 20, name: "Kai Cenat", image: "https://www.hollywoodreporter.com/wp-content/uploads/2023/02/D.jpg?w=1296&h=730&crop=1" },
 ];
 
 const Homepage = ({ onSelectInfluencer }) => {
+  
+  const navigate = useNavigate(); // Initialize useNavigate
+
+  const handleClick = (influencer) => {
+    onSelectInfluencer(influencer.id); // Update global state with selected influencer ID
+    navigate('/profile'); // Navigate to Profile page
+  };
+
   return (
     <div className="homepage-container">
       <h1>Select an Influencer</h1>
@@ -34,7 +43,7 @@ const Homepage = ({ onSelectInfluencer }) => {
           <div
             key={influencer.id}
             className="influencer-card"
-            onClick={() => onSelectInfluencer(influencer)}
+            onClick={() => handleClick(influencer)}
           >
             <img src={influencer.image} alt={influencer.name} className="influencer-image" />
             <p>{influencer.name}</p>
