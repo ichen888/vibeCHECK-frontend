@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from 'react-router-dom'; // For navigation
+import { useNavigate } from 'react-router-dom'; // For navigation back to homepage
 import "./Profile.css";
 import SearchBar from './SearchBar';
 import NewsSection from './NewsSection';
@@ -7,6 +7,7 @@ import RecentContent from './RecentContent';
 import VoteSection from './VoteSection';
 
 // Example list of influencers (you can replace this with actual API data)
+// Make sure this array is defined before using it in useEffect
 const influencers = [
   { id: 19, name: "Taylor Swift", vibeScore: 85, image: "https://cdn.prod.website-files.com/61e1db1c178256e11be974b0/63f91e8829fbd0aaf9de4cb8_htygWn9bAtmW8KF52-4zwtXFzTwiA9dfZ4Q_custom_logo.png" },
   { id: 2, name: "Kanye West", vibeScore: 60, image: "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5c/Kanye_West_at_the_2009_Tribeca_Film_Festival_%28crop_2%29.jpg/1200px-Kanye_West_at_the_2009_Tribeca_Film_Festival_%28crop_2%29.jpg" },
@@ -32,6 +33,7 @@ function Profile({ influencerId }) {
   
   const navigate = useNavigate(); // For navigation back to homepage
 
+  // This effect runs when the component mounts or when influencerId changes
   useEffect(() => {
     if (influencerId) {
       // Simulate fetching influencer data based on influencerId
@@ -42,11 +44,21 @@ function Profile({ influencerId }) {
     }
   }, [influencerId]);
 
+  // Handle search result from SearchBar
+  const handleSearchResult = (influencer) => {
+    if (influencer) {
+      setInfluencerData(influencer); // Update with new influencer data from search
+    } else {
+      setInfluencerData(null); // Clear if no match found
+    }
+  };
+
   return (
     <div className="container">
       <header className="header">
         <h1>vibeCHECK</h1>
-        <SearchBar />
+        {/* Pass handleSearchResult to SearchBar */}
+        <SearchBar onSearchResult={handleSearchResult} />
       </header>
 
       <div className="profile">
@@ -64,7 +76,7 @@ function Profile({ influencerId }) {
         ) : (
           <>
             <h2>No Influencer Selected</h2>
-            <p>Please go back and select an influencer.</p>
+            <p>Please search for an influencer or go back and select one.</p>
           </>
         )}
       </div>
@@ -77,13 +89,13 @@ function Profile({ influencerId }) {
           </div>
 
           {/* Vote Section */}
-          <VoteSection influencerId={influencerId} />
+          <VoteSection influencerId={influencerData.id} />
 
           {/* News Section */}
-          <NewsSection influencerId={influencerId} />
+          <NewsSection influencerId={influencerData.id} />
 
           {/* Recent Content Section */}
-          <RecentContent influencerId={influencerId} />
+          <RecentContent influencerId={influencerData.id} />
         </>
       )}
 
