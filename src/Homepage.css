@@ -35,8 +35,8 @@
 
 /* Creators Text */
 .creators {
-  font-size: 0.9rem; /* Smaller font size */
-  color: #b0b0b0; /* Light grey color */
+  font-size: 0.75rem; /* Smaller font size */
+  color: #b0b0b0;     /* Light grey color */
   margin-top: 5px;
 }
 

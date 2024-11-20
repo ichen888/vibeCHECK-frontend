@@ -1,90 +1,92 @@
 import React, { useState, useEffect } from 'react';
 
 const NewsSection = ({ influencerId }) => {
-    const [newsItems, setNewsItems] = useState([]);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(null);
+  const [newsArticles, setNewsArticles] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-    // Placeholder news items for when no influencer is selected
-    const placeholderNews = [
-        {
-            id: 1,
-            title: "Search for a Celebrity",
-            content: "Enter a name above to see their latest news and updates."
-        },
-        {
-            id: 2,
-            title: "Stay Updated",
-            content: "Get the latest news, social media updates, and trending stories."
-        },
-        {
-            id: 3,
-            title: "Track Celebrity Vibes",
-            content: "Discover how your favorite celebrities are trending in real-time."
+  const placeholderArticles = [
+    {
+      id: 1,
+      title: 'No news articles available',
+      summary: 'Please select an influencer to view news articles.',
+      sentimentScore: 'N/A',
+      url: '#',
+    },
+  ];
+
+  useEffect(() => {
+    const fetchNews = async () => {
+      if (!influencerId) {
+        setNewsArticles(placeholderArticles);
+        setLoading(false);
+        return;
+      }
+
+      try {
+        setLoading(true);
+        const response = await fetch('http://127.0.0.1:8000/News');
+
+        if (!response.ok) {
+          throw new Error('Failed to fetch news articles');
         }
-    ];
 
-    useEffect(() => {
-        const fetchNews = async () => {
-            if (!influencerId) {
-                setNewsItems(placeholderNews);
-                setLoading(false);
-                return;
-            }
+        const data = await response.json();
 
-            try {
-                setLoading(true);
-                const response = await fetch('http://127.0.0.1:8000/News');
-                
-                if (!response.ok) {
-                    throw new Error('Failed to fetch news');
-                }
+        const filteredArticles = data
+          .filter((item) => item.influencer_id === influencerId)
+          .sort((a, b) => new Date(b.date || 0) - new Date(a.date || 0))
+          .slice(0, 5)
+          .map((item) => ({
+            id: item.id,
+            title: item.title || 'No Title',
+            summary: item.summary || 'No Summary Available',
+            url: item.url || '#',
+            date: item.date,
+            // Adjust sentimentScore formatting
+            sentimentScore:
+              item.sentiment_score !== null && item.sentiment_score !== undefined
+                ? Number(item.sentiment_score) % 1 === 0
+                  ? Number(item.sentiment_score).toFixed(0)
+                  : Number(item.sentiment_score).toFixed(1)
+                : 'N/A',
+          }));
 
-                const data = await response.json();
+        setNewsArticles(filteredArticles.length > 0 ? filteredArticles : placeholderArticles);
+      } catch (err) {
+        console.error('Error fetching news articles:', err);
+        setError('Failed to load news articles');
+        setNewsArticles(placeholderArticles);
+      } finally {
+        setLoading(false);
+      }
+    };
 
-                // Filter news by influencer_id and get the most recent 3 items
-                const filteredNews = data
-                    .filter(item => item.influencer_id === influencerId)
-                    .sort((a, b) => b.id - a.id)
-                    .slice(0, 3)
-                    .map(item => ({
-                        id: item.id,
-                        title: item.title,
-                        content: item.content,
-                        url: item.url
-                    }));
+    fetchNews();
+  }, [influencerId]);
 
-                setNewsItems(filteredNews.length > 0 ? filteredNews : placeholderNews);
-            } catch (err) {
-                console.error('Error fetching news:', err);
-                setError('Failed to load news content');
-                setNewsItems(placeholderNews);
-            } finally {
-                setLoading(false);
-            }
-        };
+  if (loading) return <div>Loading...</div>;
+  if (error) return <div>{error}</div>;
 
-        fetchNews();
-    }, [influencerId]);
-
-    if (loading) return <div>Loading...</div>;
-    if (error) return <div>{error}</div>;
-
-    return (
-        <div className="news-section">
-            {newsItems.map(item => (
-                <div key={item.id} className="news-item">
-                    <h3>{item.title}</h3>
-                    <p>{item.content}</p>
-                    {item.url && (
-                        <a href={item.url} target="_blank" rel="noopener noreferrer">
-                            Read More
-                        </a>
-                    )}
-                </div>
-            ))}
+  return (
+    <div className="news-section">
+      <h2>Recent News</h2>
+      {newsArticles.map((article) => (
+        <div key={article.id} className="news-article">
+          <h3>{article.title}</h3>
+          <div className="sentiment-score">
+            Sentiment Score: {article.sentimentScore}/10
+          </div>
+          <p>{article.summary}</p>
+          {article.url && article.url !== '#' && (
+            <a href={article.url} target="_blank" rel="noopener noreferrer">
+              Read more
+            </a>
+          )}
         </div>
-    );
+      ))}
+    </div>
+  );
 };
 
 export default NewsSection;

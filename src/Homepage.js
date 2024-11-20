@@ -86,7 +86,7 @@ const Homepage = ({ onSelectInfluencer }) => {
           className={`welcome-overlay ${startFadeOut ? "fade-out" : ""}`}
           onAnimationEnd={handleAnimationEnd}
         >
-          <h1>Welcome to VibeCHECK</h1>
+          <h1>Welcome to VibeCHECK!</h1>
         </div>
       )}
 
