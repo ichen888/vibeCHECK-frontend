@@ -17,8 +17,7 @@
         "react-scripts": "^5.0.1",
         "resolve-url-loader": "^5.0.0",
         "svgo": "^3.3.2",
-        "web-vitals": "^2.1.4",
-        "webpack": "^5.96.1"
+        "web-vitals": "^2.1.4"
     },
     "resolutions": {
         "nth-check": "^2.0.1",
@@ -31,7 +30,6 @@
         "eject": "react-scripts eject",
         "preinstall": "npx npm-force-resolutions"
     },
-    
     "eslintConfig": {
         "extends": [
             "react-app",
@@ -49,5 +47,9 @@
             "last 1 firefox version",
             "last 1 safari version"
         ]
+    },
+    "devDependencies": {
+        "webpack": "^5.96.1",
+        "webpack-cli": "^5.1.4"
     }
 }
