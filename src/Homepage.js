@@ -28,30 +28,29 @@ const influencers = [
 const Homepage = ({ onSelectInfluencer }) => {
   const [showOverlay, setShowOverlay] = useState(false);
   const [blurContent, setBlurContent] = useState(false);
+  const [startFadeOut, setStartFadeOut] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
-    // Check if the overlay has been shown in this session
-    const hasSeenOverlay = sessionStorage.getItem('hasSeenOverlay');
+    const hasSeenOverlay = sessionStorage.getItem("hasSeenOverlay");
 
     if (!hasSeenOverlay) {
-      // Show overlay and blur background
-      setShowOverlay(true);
-      setBlurContent(true);
+      setShowOverlay(true); // Show the "Welcome to VibeCHECK" message
+      setBlurContent(true); // Apply blur to the background
 
-      // Mark overlay as seen in sessionStorage
-      sessionStorage.setItem('hasSeenOverlay', 'true');
+      sessionStorage.setItem("hasSeenOverlay", "true");
 
-      // Remove blur and hide overlay after 3 seconds
-      const timer = setTimeout(() => {
-        setBlurContent(false); // Remove blur
-        setShowOverlay(false);  // Hide overlay
-      }, 3000); // 3000ms = 3 seconds
-
-      // Cleanup timer
-      return () => clearTimeout(timer);
+      // Start the fade-out after a delay (if needed)
+      setTimeout(() => {
+        setStartFadeOut(true);
+      }, 1000); // Start fade-out after 1 second (adjust as needed)
     }
   }, []);
+
+  const handleAnimationEnd = () => {
+    setBlurContent(false); // Remove blur
+    setShowOverlay(false); // Hide overlay
+  };
 
   const handleClick = (influencer) => {
     onSelectInfluencer(influencer.id);
@@ -62,18 +61,20 @@ const Homepage = ({ onSelectInfluencer }) => {
     <div className="homepage-container">
       {/* Welcome Overlay */}
       {showOverlay && (
-        <div className="welcome-overlay">
+        <div
+          className={`welcome-overlay ${startFadeOut ? "fade-out" : ""}`}
+          onAnimationEnd={handleAnimationEnd}
+        >
           <h1>Welcome to VibeCHECK</h1>
         </div>
       )}
 
-      {/* Content to be blurred */}
+      {/* Background Content */}
       <div className={`content-container ${blurContent ? "blur" : ""}`}>
-        {/* Logo in top left */}
+        {/* Logo */}
         <div className="VibeCHECK-logo">VibeCHECK</div>
 
         <h1>Select an Influencer</h1>
-
         <div className="influencer-grid">
           {influencers.map((influencer) => (
             <div
