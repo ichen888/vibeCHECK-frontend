@@ -8,18 +8,21 @@ const RecentComments = ({ influencerId }) => {
     const placeholderComments = [
         {
             id: 1,
-            Comment: "Search for a celebrity to see what fans are saying",
+            comment: "Search for a celebrity to see what fans are saying",
             title: "No comments yet",
+            sentiment_score: 0
         },
         {
             id: 2,
-            Comment: "Discover fan reactions and discussions",
+            comment: "Discover fan reactions and discussions",
             title: "Waiting for selection",
+            sentiment_score: 0
         },
         {
             id: 3,
-            Comment: "See what people are talking about",
+            comment: "See what people are talking about",
             title: "Select a celebrity above",
+            sentiment_score: 0
         }
     ];
 
@@ -47,11 +50,11 @@ const RecentComments = ({ influencerId }) => {
                     .slice(0, 3)
                     .map(item => ({
                         id: item.id,
-                        comment: item.comment || "No Comment Available", // Changed to match database field
+                        comment: item.comment || "No Comment Available",
                         title: item.title,
                         videoUrl: item.url,
                         commentDate: item.date,
-                        commentCount: item.comment_count || 0
+                        sentimentScore: (item.sentiment_score * 10).toFixed(1) // Convert to score out of 10
                     }));
 
                 setComments(filteredComments.length > 0 ? filteredComments : placeholderComments);
@@ -79,6 +82,9 @@ const RecentComments = ({ influencerId }) => {
                         <blockquote className="comment-text">
                             "{item.comment}"
                         </blockquote>
+                        <div className="sentiment-score">
+                            Sentiment Score: {item.sentimentScore}/10
+                        </div>
                     </div>
                     <div className="video-details">
                         <h4>From Video: {item.title}</h4>
