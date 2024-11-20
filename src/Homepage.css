@@ -4,7 +4,55 @@
   text-align: center;
   position: relative;
   overflow: hidden;
-  background-color: #121212; /* Added background color for better contrast */
+  background-color: #121212;
+}
+
+/* Header */
+.header {
+  position: absolute;
+  top: 10px;
+  left: 20px;
+  right: 20px;
+  display: flex;
+  align-items: flex-start; /* Align items to the top */
+  justify-content: space-between;
+  z-index: 100;
+}
+
+/* Logo Section */
+.logo-section {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start; /* Align items to the left */
+}
+
+/* VibeCHECK Logo */
+.VibeCHECK-logo {
+  font-size: 2rem;
+  color: #ffffff;
+  font-weight: bold;
+}
+
+/* Creators Text */
+.creators {
+  font-size: 0.9rem; /* Smaller font size */
+  color: #b0b0b0; /* Light grey color */
+  margin-top: 5px;
+}
+
+/* Info Button */
+.info-button {
+  background-color: #ffffff;
+  color: #121212;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.info-button:hover {
+  background-color: #e0e0e0;
 }
 
 /* Welcome Overlay */
@@ -19,15 +67,12 @@
   z-index: 1000;
   text-align: center;
   opacity: 1;
-  /* No animation by default */
 }
 
-/* Fade-out state */
 .welcome-overlay.fade-out {
-  animation: fadeOut 2s forwards; /* Fade out over 2 seconds */
+  animation: fadeOut 2s forwards;
 }
 
-/* Fade-out animation */
 @keyframes fadeOut {
   from {
     opacity: 1;
@@ -39,24 +84,12 @@
 
 /* Background Content */
 .content-container {
-  transition: filter 0.3s ease; /* Smooth blur transition */
+  transition: filter 0.3s ease;
 }
 
-/* Apply blur effect when the 'blur' class is present */
 .content-container.blur {
-  filter: blur(8px); /* Apply blur effect */
-  pointer-events: none; /* Disable interaction while blurred */
-}
-
-/* VibeCHECK Logo */
-.VibeCHECK-logo {
-  position: absolute;
-  top: 10px;
-  left: 20px;
-  font-size: 2rem;
-  color: #ffffff;
-  font-weight: bold;
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+  filter: blur(8px);
+  pointer-events: none;
 }
 
 /* Page Heading */
@@ -69,7 +102,7 @@
 /* Influencer Grid */
 .influencer-grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr); /* 4 cards per row for larger screens */
+  grid-template-columns: repeat(4, 1fr);
   gap: 20px;
   padding: 0 20px;
 }
@@ -108,9 +141,50 @@
   margin: 0;
 }
 
-/* Responsive Design */
+/* Popup Overlay */
+.popup-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000;
+}
 
-/* For tablets and smaller screens */
+/* Popup Content */
+.popup-content {
+  background-color: #ffffff;
+  color: #121212;
+  padding: 20px;
+  width: 80%;
+  max-width: 600px;
+  border-radius: 8px;
+  position: relative;
+  text-align: left;
+  overflow-y: auto;
+  max-height: 80%;
+}
+
+.close-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: transparent;
+  border: none;
+  font-size: 24px;
+  color: #121212;
+  cursor: pointer;
+}
+
+.popup-content p {
+  margin-top: 40px;
+}
+
+/* Responsive Design */
 @media (max-width: 1024px) {
   .influencer-grid {
     grid-template-columns: repeat(3, 1fr);
@@ -121,7 +195,6 @@
   }
 }
 
-/* For mobile devices */
 @media (max-width: 768px) {
   .influencer-grid {
     grid-template-columns: repeat(2, 1fr);

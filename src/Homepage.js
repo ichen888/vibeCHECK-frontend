@@ -29,27 +29,27 @@ const Homepage = ({ onSelectInfluencer }) => {
   const [showOverlay, setShowOverlay] = useState(false);
   const [blurContent, setBlurContent] = useState(false);
   const [startFadeOut, setStartFadeOut] = useState(false);
+  const [showPopup, setShowPopup] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
     const hasSeenOverlay = sessionStorage.getItem("hasSeenOverlay");
 
     if (!hasSeenOverlay) {
-      setShowOverlay(true); // Show the "Welcome to VibeCHECK" message
-      setBlurContent(true); // Apply blur to the background
+      setShowOverlay(true);
+      setBlurContent(true);
 
       sessionStorage.setItem("hasSeenOverlay", "true");
 
-      // Start the fade-out after a delay (if needed)
       setTimeout(() => {
         setStartFadeOut(true);
-      }, 1000); // Start fade-out after 1 second (adjust as needed)
+      }, 1000);
     }
   }, []);
 
   const handleAnimationEnd = () => {
-    setBlurContent(false); // Remove blur
-    setShowOverlay(false); // Hide overlay
+    setBlurContent(false);
+    setShowOverlay(false);
   };
 
   const handleClick = (influencer) => {
@@ -57,8 +57,29 @@ const Homepage = ({ onSelectInfluencer }) => {
     navigate("/profile");
   };
 
+  const handlePopupOpen = () => {
+    setShowPopup(true);
+  };
+
+  const handlePopupClose = () => {
+    setShowPopup(false);
+  };
+
   return (
     <div className="homepage-container">
+      {/* Header with Logo and Info Button */}
+      <div className="header">
+        <div className="logo-section">
+          <div className="VibeCHECK-logo">VibeCHECK</div>
+          <div className="creators">
+            Created by Kyrie Park, Harsh Sahu, Ian Chen, & Jessica Yu
+          </div>
+        </div>
+        <button className="info-button" onClick={handlePopupOpen}>
+          What is VibeCHECK
+        </button>
+      </div>
+
       {/* Welcome Overlay */}
       {showOverlay && (
         <div
@@ -71,9 +92,6 @@ const Homepage = ({ onSelectInfluencer }) => {
 
       {/* Background Content */}
       <div className={`content-container ${blurContent ? "blur" : ""}`}>
-        {/* Logo */}
-        <div className="VibeCHECK-logo">VibeCHECK</div>
-
         <h1>Select an Influencer</h1>
         <div className="influencer-grid">
           {influencers.map((influencer) => (
@@ -92,6 +110,28 @@ const Homepage = ({ onSelectInfluencer }) => {
           ))}
         </div>
       </div>
+
+      {/* Popup for "What is VibeCHECK" */}
+      {showPopup && (
+        <div className="popup-overlay" onClick={handlePopupClose}>
+          <div className="popup-content" onClick={(e) => e.stopPropagation()}>
+            <button className="close-button" onClick={handlePopupClose}>
+              &times;
+            </button>
+            <p>
+              VibeCHECK is a web-based application that allows users to analyze
+              influencer behavior and public sentiment. Users can view content
+              related to influencers, from YouTube videos & comments and TMZ
+              news articles, and vote whether the influencer's vibe is 'good' or
+              'bad.' The system analyzes scraped data from YouTube and TMZ and
+              stores it in a MySQL database. Users will be able to vote on
+              influencer behavior based on publicly available content and
+              comments in the future. Our algorithm then returns a score that
+              gauges the "vibe" of an influencer.
+            </p>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
