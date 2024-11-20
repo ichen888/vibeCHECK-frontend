@@ -1,6 +1,5 @@
-// Homepage.js
-import React from "react";
-import { useNavigate } from "react-router-dom"; // Import useNavigate
+import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import "./Homepage.css";
 
 const influencers = [
@@ -27,31 +26,50 @@ const influencers = [
 ];
 
 const Homepage = ({ onSelectInfluencer }) => {
-  const navigate = useNavigate(); // Initialize useNavigate
+  const [showOverlay, setShowOverlay] = useState(true);
+  const navigate = useNavigate();
 
   const handleClick = (influencer) => {
-    onSelectInfluencer(influencer.id); // Update global state with selected influencer ID
-    navigate("/profile"); // Navigate to Profile page
+    onSelectInfluencer(influencer.id);
+    navigate("/profile");
   };
+
+  useEffect(() => {
+    const timer = setTimeout(() => setShowOverlay(false), 4000); // Hide overlay after 4 seconds
+    return () => clearTimeout(timer); // Cleanup timer
+  }, []);
 
   return (
     <div className="homepage-container">
-      <h1>Select an Influencer</h1>
-      <div className="influencer-grid">
-        {influencers.map((influencer) => (
-          <div
-            key={influencer.id}
-            className="influencer-card"
-            onClick={() => handleClick(influencer)}
-          >
-            <img
-              src={influencer.image}
-              alt={influencer.name}
-              className="influencer-image"
-            />
-            <p>{influencer.name}</p>
-          </div>
-        ))}
+      {/* Welcome Overlay */}
+      {showOverlay && (
+        <div className="welcome-overlay">
+          <h1>Welcome to Vibe Check</h1>
+        </div>
+      )}
+
+      {/* Background Content */}
+      <div className={`background-content ${showOverlay ? "blur" : ""}`}>
+        {/* Logo in top left */}
+        <div className="vibecheck-logo">Vibe Check</div>
+
+        <h1>Select an Influencer</h1>
+        <div className="influencer-grid">
+          {influencers.map((influencer) => (
+            <div
+              key={influencer.id}
+              className="influencer-card"
+              onClick={() => handleClick(influencer)}
+            >
+              <img
+                src={influencer.image}
+                alt={influencer.name}
+                className="influencer-image"
+              />
+              <p>{influencer.name}</p>
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   );
