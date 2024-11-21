@@ -9,6 +9,7 @@ function Profile({ influencerId }) {
     const [influencerData, setInfluencerData] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+    const [showPopup, setShowPopup] = useState(false); // State for popup
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -47,6 +48,15 @@ function Profile({ influencerId }) {
         navigate('/');
     };
 
+    // Handlers for popup
+    const handlePopupOpen = () => {
+        setShowPopup(true);
+    };
+
+    const handlePopupClose = () => {
+        setShowPopup(false);
+    };
+
     if (!influencerId) {
         navigate('/');
         return null;
@@ -58,10 +68,30 @@ function Profile({ influencerId }) {
 
     return (
         <div className="profile-container">
-            <button onClick={handleReturnHome} className="return-home-button">
-                Return to Homepage
-            </button>
-            
+            {/* Button Container */}
+            <div className="button-container">
+                <button onClick={handleReturnHome} className="return-home-button">
+                    Return to Homepage
+                </button>
+                <button onClick={handlePopupOpen} className="read-before-use-button">
+                    Read before use!
+                </button>
+            </div>
+
+            {/* Popup for "Read before use!" */}
+            {showPopup && (
+                <div className="popup-overlay" onClick={handlePopupClose}>
+                    <div className="popup-content" onClick={(e) => e.stopPropagation()}>
+                        <button className="close-button" onClick={handlePopupClose}>
+                            &times;
+                        </button>
+                        <p>
+                            VibeCHECK gives celebrity profiles that users can look at to vote on their recent news and comments in the media. The recent news and comments are listed, where we've ran each news article title or comment through our sentiment news analysis program. A score is given between 1-10 that provides our algorithm's analysis of the positive or negative mood of each media source. Based on that information, users are welcome to vote on Good Vibes or Bad Vibes, which then gets aggregated into our general score of Good or Bad per celebrity.
+                        </p>
+                    </div>
+                </div>
+            )}
+
             <div className="profile-content">
                 <div className="profile-header">
                     <img 

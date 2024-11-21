@@ -70,7 +70,6 @@ const NewsSection = ({ influencerId }) => {
 
   return (
     <div className="news-section">
-      <h2>Recent News</h2>
       {newsArticles.map((article) => (
         <div key={article.id} className="news-article">
           <h3>{article.title}</h3>

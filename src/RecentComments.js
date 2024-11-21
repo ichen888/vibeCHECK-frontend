@@ -81,7 +81,6 @@ const RecentComments = ({ influencerId }) => {
 
   return (
     <div className="comments-section">
-      <h2>Recent Comments</h2>
       {comments.map((item) => (
         <div key={item.id} className="comment-card">
           <div className="comment-main">

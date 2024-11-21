@@ -19,7 +19,91 @@ body {
   max-width: 1200px;
   margin: 0 auto;
   padding: 20px;
+  /* Removed padding-top: 60px; */
 }
+
+.button-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.return-home-button {
+    padding: 10px 20px;
+    background-color: #333;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.3s ease;
+}
+
+.return-home-button:hover {
+    background-color: #444;
+}
+
+.read-before-use-button {
+    background-color: red; /* Red background */
+    color: white;          /* White text */
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+}
+
+.read-before-use-button:hover {
+    background-color: darkred;
+}
+
+/* Popup Overlay */
+.popup-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2000;
+}
+
+/* Popup Content */
+.popup-content {
+    background-color: #ffffff;
+    color: #121212;
+    padding: 20px;
+    width: 80%;
+    max-width: 600px;
+    border-radius: 8px;
+    position: relative;
+    text-align: left;
+    overflow-y: auto;
+    max-height: 80%;
+}
+
+.close-button {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: transparent;
+    border: none;
+    font-size: 24px;
+    color: #121212;
+    cursor: pointer;
+}
+
+.popup-content p {
+    margin-top: 20px;
+    line-height: 1.5;
+}
+
+/* Existing styles for profile-content, profile-header, etc. */
 
 .profile-content {
   margin-top: 20px;
@@ -67,10 +151,10 @@ body {
 }
 
 .content-sections {
-  margin-top: 30px;
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 20px;
+  margin-top: 30px;
 }
 
 .news-section,
@@ -155,400 +239,5 @@ body {
 
   .profile-container {
     width: 95%;
-  }
-}
-
-.return-home-button {
-    position: fixed;
-    top: 20px;
-    left: 20px;
-    padding: 10px 20px;
-    background-color: #333;
-    color: #fff;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 14px;
-    transition: background-color 0.3s ease;
-    z-index: 1000;
-}
-
-.return-home-button:hover {
-    background-color: #444;
-}
-
-.profile-container {
-    padding-top: 60px;
-}
-
-.vote-section {
-  background-color: #222;
-  padding: 25px;
-  border-radius: 10px;
-  margin: 20px 0;
-  text-align: center;
-}
-
-.vibe-stats {
-  display: flex;
-  justify-content: space-around;
-  margin-bottom: 25px;
-}
-
-.good-vibes-stat,
-.bad-vibes-stat {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.stat-label {
-  font-size: 16px;
-  color: #888;
-  margin-bottom: 5px;
-}
-
-.stat-value {
-  font-size: 28px;
-  font-weight: bold;
-}
-
-.good-vibes-stat .stat-value {
-  color: #28a745;
-}
-
-.bad-vibes-stat .stat-value {
-  color: #dc3545;
-}
-
-.vote-buttons {
-  display: flex;
-  justify-content: center;
-  gap: 20px;
-  margin-bottom: 15px;
-}
-
-.vote-button {
-  padding: 12px 30px;
-  border: none;
-  border-radius: 25px;
-  font-size: 16px;
-  font-weight: bold;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  color: #fff;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-}
-
-.vote-button:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
-}
-
-.good-vibe {
-  background-color: #28a745;
-}
-
-.good-vibe:hover:not(:disabled) {
-  background-color: #218838;
-  transform: translateY(-2px);
-}
-
-.bad-vibe {
-  background-color: #dc3545;
-}
-
-.bad-vibe:hover:not(:disabled) {
-  background-color: #c82333;
-  transform: translateY(-2px);
-}
-
-.vote-message {
-  color: #888;
-  margin-top: 15px;
-  font-size: 14px;
-}
-
-.vote-section {
-  background-color: #222;
-  padding: 20px;
-  border-radius: 8px;
-  margin: 20px 0;
-}
-
-.vote-container {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 30px;
-}
-
-.vote-stats {
-  display: flex;
-  gap: 40px;
-  flex: 1;
-}
-
-.good-vibes-stat,
-.bad-vibes-stat {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.stat-value {
-  font-size: 32px;
-  font-weight: bold;
-  margin-bottom: 5px;
-}
-
-.good-vibes-stat .stat-value {
-  color: #28a745;
-}
-
-.bad-vibes-stat .stat-value {
-  color: #dc3545;
-}
-
-.stat-label {
-  font-size: 14px;
-  color: #888;
-}
-
-.vote-buttons {
-  display: flex;
-  gap: 15px;
-  flex: 1;
-  justify-content: flex-end;
-}
-
-.vote-button {
-  padding: 12px 24px;
-  border: none;
-  border-radius: 25px;
-  font-size: 16px;
-  font-weight: bold;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  color: #fff;
-  min-width: 140px;
-}
-
-.good-vibe {
-  background-color: #28a745;
-}
-
-.good-vibe:hover:not(:disabled) {
-  background-color: #218838;
-  transform: translateY(-2px);
-}
-
-.bad-vibe {
-  background-color: #dc3545;
-}
-
-.bad-vibe:hover:not(:disabled) {
-  background-color: #c82333;
-  transform: translateY(-2px);
-}
-
-.vote-button:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
-}
-
-.vote-message {
-  text-align: center;
-  margin-top: 15px;
-  color: #888;
-}
-
-@media (max-width: 768px) {
-  .vote-container {
-      flex-direction: column;
-  }
-  
-  .vote-stats {
-      width: 100%;
-      justify-content: center;
-  }
-  
-  .vote-buttons {
-      width: 100%;
-      justify-content: center;
-  }
-}
-
-.content-sections {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 20px;
-  margin-top: 30px;
-}
-
-.news-container,
-.comments-container {
-  background-color: #222;
-  border-radius: 8px;
-  padding: 20px;
-}
-
-.news-container h2,
-.comments-container h2 {
-  color: #fff;
-  font-size: 20px;
-  margin-bottom: 15px;
-  padding-bottom: 10px;
-  border-bottom: 1px solid #444;
-}
-
-@media (max-width: 768px) {
-  .content-sections {
-      grid-template-columns: 1fr;
-  }
-}
-
-.vote-section {
-  background-color: #222;
-  padding: 20px;
-  border-radius: 8px;
-  margin: 20px 0;
-}
-
-.vote-container {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 20px;
-}
-
-.good-vibes-stat,
-.bad-vibes-stat {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  min-width: 120px;
-}
-
-.stat-value {
-  font-size: 36px;
-  font-weight: bold;
-  margin-bottom: 5px;
-}
-
-.good-vibes-stat .stat-value {
-  color: #28a745;
-}
-
-.bad-vibes-stat .stat-value {
-  color: #dc3545;
-}
-
-.stat-label {
-  font-size: 14px;
-  color: #888;
-}
-
-.vote-buttons {
-  display: flex;
-  gap: 15px;
-  justify-content: center;
-  flex: 1;
-}
-
-.vote-button {
-  padding: 12px 24px;
-  border: none;
-  border-radius: 25px;
-  font-size: 16px;
-  font-weight: bold;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  color: #fff;
-  min-width: 140px;
-}
-
-.good-vibe {
-  background-color: #28a745;
-}
-
-.good-vibe:hover:not(:disabled) {
-  background-color: #218838;
-  transform: translateY(-2px);
-}
-
-.bad-vibe {
-  background-color: #dc3545;
-}
-
-.bad-vibe:hover:not(:disabled) {
-  background-color: #c82333;
-  transform: translateY(-2px);
-}
-
-.vote-button:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
-}
-
-.vote-message {
-  text-align: center;
-  margin-top: 15px;
-  color: #888;
-}
-
-@media (max-width: 768px) {
-  .vote-container {
-      flex-direction: column;
-  }
-  
-  .vote-buttons {
-      width: 100%;
-      order: 2;
-  }
-  
-  .good-vibes-stat {
-      order: 1;
-  }
-  
-  .bad-vibes-stat {
-      order: 3;
-  }
-}
-
-.vibe-bar {
-  width: 100%;
-  height: 20px;
-  background-color: #333;
-  border-radius: 10px;
-  overflow: hidden;
-  display: flex;
-  margin-bottom: 20px;
-}
-
-.good-vibes-bar {
-  height: 100%;
-  background-color: #28a745;
-  transition: width 0.3s ease;
-}
-
-.bad-vibes-bar {
-  height: 100%;
-  background-color: #dc3545;
-  transition: width 0.3s ease;
-}
-
-/* Update the existing vote-section padding */
-.vote-section {
-  background-color: #222;
-  padding: 20px;
-  border-radius: 8px;
-  margin: 20px 0;
-}
-
-@media (max-width: 768px) {
-  .vibe-bar {
-      margin-bottom: 15px;
   }
 }
