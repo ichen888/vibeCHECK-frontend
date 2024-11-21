@@ -10,7 +10,9 @@ const NewsSection = ({ influencerId }) => {
     {
       id: 1,
       title: 'No news articles available',
+      comment: 'N/A',
       sentimentScore: 'N/A',
+      sentimentClass: '',
       url: '#',
       date: null,
     },
@@ -41,6 +43,7 @@ const NewsSection = ({ influencerId }) => {
           .map((item) => ({
             id: item.id,
             title: item.title || 'No Title',
+            comment: item.description || 'No description available',
             url: item.url || '#',
             date: item.date,
             sentimentScore:
@@ -49,6 +52,11 @@ const NewsSection = ({ influencerId }) => {
                     Number(item.sentiment_score) % 1 === 0 ? 0 : 1
                   )
                 : 'N/A',
+            sentimentClass: item.sentiment_score > 7
+              ? 'positive'
+              : item.sentiment_score >= 4
+              ? 'neutral'
+              : 'negative',
           }));
 
         setNewsArticles(
@@ -72,25 +80,31 @@ const NewsSection = ({ influencerId }) => {
   return (
     <div className="news-section">
       {newsArticles.map((article) => (
-        <div key={article.id} className="comment-card">
-          <div className="comment-main">
-            <blockquote className="comment-text">
-              {article.title}
-            </blockquote>
-            <div className="sentiment-row">
-              <div className="sentiment-score">
-                Sentiment Score: {article.sentimentScore}/10
-              </div>
-              {article.url && (
-                <button
-                  className="read-more-button"
-                  onClick={() => window.open(article.url, '_blank')}
-                  aria-label={`Read more about ${article.title}`}
-                >
-                  Read More
-                </button>
-              )}
-            </div>
+        <div key={article.id} className="news-card">
+          {/* Title Box */}
+          <div className="title-box">
+            <h4 className="comment-title">{article.title}</h4>
+          </div>
+
+          {/* Sentiment Score Box */}
+          <div className="sentiment-box">
+            <span className="sentiment-label">Sentiment Score:</span>
+            <span className={`sentiment-score ${article.sentimentClass}`}>
+              {article.sentimentScore}/10
+            </span>
+          </div>
+
+          {/* Read More Button */}
+          <div className="read-more-box">
+            {article.url && (
+              <button
+                className="read-more-button"
+                onClick={() => window.open(article.url, '_blank')}
+                aria-label={`Read more about ${article.title}`}
+              >
+                Read More
+              </button>
+            )}
           </div>
         </div>
       ))}
