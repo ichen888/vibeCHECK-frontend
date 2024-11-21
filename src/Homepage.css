@@ -219,3 +219,17 @@
     font-size: 1.2rem;
   }
 }
+/* Subtitle Frame */
+.subtitle-frame {
+  background-color: rgba(255, 255, 255, 0.1); /* Semi-transparent background */
+  border: 2px solid #28a745; /* Green border to match Good Vibes theme */
+  border-radius: 8px; /* Rounded corners */
+  padding: 15px 20px; /* Inner spacing */
+  max-width: 800px; /* Same as .homepage-subtitle to maintain alignment */
+  margin: 0 auto 30px auto; /* Center horizontally and maintain bottom margin */
+}
+
+/* Optional: Add a subtle box-shadow for depth */
+.subtitle-frame {
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+}

@@ -14,7 +14,7 @@ const influencers = [
   { id: 9, name: "P Diddy / Diddy", image: "https://podcast.posttv.com/series/20240410/t_1712785817380_name_diddy_pic.jpeg" },
   { id: 10, name: "Rihanna", image: "https://assets.vogue.com/photos/63e67c2653cf7705e1e06f3a/4:3/w_2560%2Cc_limit/GettyImages-1246958447.jpg" },
   { id: 11, name: "Billie Eilish", image: "https://i.iheart.com/v3/catalog/artist/31132274?ops=fit(720%2C720)" },
-  { id: 12, name: "Will Smith", image: "https://hips.hearstapps.com/hmg-prod/images/will-smith-attends-varietys-creative-impact-awards-and-10-directors-to-watch-brunch-at-the-parker-palm-springs-on-january-3-2016-in-palm-springs-california-photo-by-jerod-harrisgetty-images.jpg" },
+  { id: 12, name: "Will Smith", image: "https://hips.hearstapps.com/hmg-prod/images/will-smith-attends-varietys-creative-impact-awards-and-10-directors-to-watch-brunch-at-the-parker-palm-springs-on-january-3-2016-in-palm-springs-california-photo-by-jerod-harrisgetty-images.jpg?crop=1.00xw:0.667xh;0,0.0477xh&resize=640:*" },
   { id: 13, name: "Dwayne Johnson", image: "https://m.media-amazon.com/images/M/MV5BOWUzNzIzMzQtNzMxYi00OWRiLTlhZjEtZTRjYWVkYzI4ZjMwXkEyXkFqcGc@._V1_.jpg" },
   { id: 14, name: "Ariana Grande", image: "https://upload.wikimedia.org/wikipedia/commons/b/b7/Ariana_Grande_-_Vogue_2024.png" },
   { id: 15, name: "Selena Gomez", image: "https://upload.wikimedia.org/wikipedia/commons/thumb/8/81/Selena_Gomez_at_the_2024_Toronto_International_Film_Festival_10_%28cropped%29.jpg/1024px-Selena_Gomez_at_the_2024_Toronto_International_Film_Festival_10_%28cropped%29.jpg" },
@@ -70,13 +70,13 @@ const Homepage = ({ onSelectInfluencer }) => {
       {/* Header with Logo and Info Button */}
       <div className="header">
         <div className="logo-section">
-          <div className="VibeCHECK-logo">VibeCHECK</div>
+          <div className="VibeCHECK-logo">VibeCHECK ✅</div>
           <div className="creators">
             Created by Kyrie Park, Harsh Sahu, Ian Chen, & Jessica Yu
           </div>
         </div>
         <button className="info-button" onClick={handlePopupOpen}>
-          What is VibeCHECK
+          What is VibeCHECK?
         </button>
       </div>
 
@@ -92,13 +92,25 @@ const Homepage = ({ onSelectInfluencer }) => {
 
       {/* Background Content */}
       <div className={`content-container ${blurContent ? "blur" : ""}`}>
-        <h1>Select an Influencer</h1>
+        <h1>⚡Select an Influencer⚡</h1>
+        {/* New Subtitle Wrapped in a Frame */}
+        <div className="subtitle-frame">
+          <p className="homepage-subtitle">
+            To get started using VibeCHECK, choose an influencer from below. VibeCHECK is a web-based application that aims to subvert social media. To learn more, you can read our "What is VibeCHECK?" page in the top right corner or choose an influencer, then read more about our system in the "Read before Use" page.
+          </p>
+        </div>
         <div className="influencer-grid">
           {influencers.map((influencer) => (
             <div
               key={influencer.id}
               className="influencer-card"
               onClick={() => handleClick(influencer)}
+              role="button"
+              tabIndex={0}
+              onKeyPress={(e) => {
+                if (e.key === 'Enter') handleClick(influencer);
+              }}
+              title={`View profile of ${influencer.name}`}
             >
               <img
                 src={influencer.image}
