@@ -102,7 +102,7 @@ function Profile({ influencerId }) {
                     <div className="profile-info">
                         <h1>{influencerData.name}</h1>
                         <div className="vibe-score">
-                            <h2>{influencerData.vibe_score}% Good Vibes</h2>
+                            <h2>{(influencerData.vibe_score * 100).toFixed(0)}% Good Vibes</h2>
                         </div>
                     </div>
                 </div>
