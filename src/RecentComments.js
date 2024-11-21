@@ -1,4 +1,6 @@
+// RecentComments.js
 import React, { useState, useEffect } from 'react';
+import './Profile.css'; // Ensure this CSS file is correctly imported
 
 const RecentComments = ({ influencerId }) => {
   const [comments, setComments] = useState([]);
@@ -10,19 +12,25 @@ const RecentComments = ({ influencerId }) => {
       id: 1,
       comment: "Search for a celebrity to see what fans are saying",
       title: "No comments yet",
-      sentiment_score: 0,
+      sentimentScore: 'N/A',
+      videoUrl: '#',
+      sentimentClass: 'sentiment-default',
     },
     {
       id: 2,
       comment: "Discover fan reactions and discussions",
       title: "Waiting for selection",
-      sentiment_score: 0,
+      sentimentScore: 'N/A',
+      videoUrl: '#',
+      sentimentClass: 'sentiment-default',
     },
     {
       id: 3,
       comment: "See what people are talking about",
       title: "Select a celebrity above",
-      sentiment_score: 0,
+      sentimentScore: 'N/A',
+      videoUrl: '#',
+      sentimentClass: 'sentiment-default',
     },
   ];
 
@@ -47,23 +55,43 @@ const RecentComments = ({ influencerId }) => {
         const filteredComments = data
           .filter((item) => item.influencer_id === influencerId)
           .sort((a, b) => new Date(b.date || 0) - new Date(a.date || 0))
-          .slice(0, 3)
-          .map((item) => ({
-            id: item.id,
-            comment: item.comment || 'No Comment Available',
-            title: item.title,
-            videoUrl: item.url,
-            commentDate: item.date,
-            // Adjust sentimentScore formatting
-            sentimentScore:
-              item.sentiment_score !== null && item.sentiment_score !== undefined
-                ? Number(item.sentiment_score) % 1 === 0
-                  ? Number(item.sentiment_score).toFixed(0)
-                  : Number(item.sentiment_score).toFixed(1)
-                : 'N/A',
-          }));
+          .slice(0, 4) // Pull 6 comments
+          .map((item) => {
+            // Format sentimentScore
+            let sentimentScore = 'N/A';
+            if (item.sentiment_score !== null && item.sentiment_score !== undefined) {
+              sentimentScore = Number(item.sentiment_score).toFixed(
+                Number(item.sentiment_score) % 1 === 0 ? 0 : 1
+              );
+            }
 
-        setComments(filteredComments.length > 0 ? filteredComments : placeholderComments);
+            // Determine sentiment category for styling
+            let sentimentClass = 'sentiment-default';
+            const score = parseFloat(sentimentScore);
+            if (!isNaN(score)) {
+              if (score >= 1 && score <= 4) {
+                sentimentClass = 'sentiment-red';
+              } else if (score >= 5 && score <= 7) {
+                sentimentClass = 'sentiment-yellow';
+              } else if (score >= 8 && score <= 10) {
+                sentimentClass = 'sentiment-green';
+              }
+            }
+
+            return {
+              id: item.id,
+              comment: item.comment || 'No Comment Available',
+              title: item.title || 'No Title',
+              videoUrl: item.url || '#',
+              commentDate: item.date,
+              sentimentScore,
+              sentimentClass,
+            };
+          });
+
+        setComments(
+          filteredComments.length > 0 ? filteredComments : placeholderComments
+        );
       } catch (err) {
         console.error('Error fetching comments:', err);
         setError('Failed to load comments');
@@ -76,27 +104,40 @@ const RecentComments = ({ influencerId }) => {
     fetchComments();
   }, [influencerId]);
 
-  if (loading) return <div>Loading...</div>;
-  if (error) return <div>{error}</div>;
+  if (loading) return <div className="comments-loading">Loading...</div>;
+  if (error) return <div className="comments-error">{error}</div>;
 
   return (
     <div className="comments-section">
       {comments.map((item) => (
-        <div key={item.id} className="comment-card">
-          <div className="comment-main">
-            <blockquote className="comment-text">"{item.comment}"</blockquote>
-            <div className="sentiment-score">
-              Sentiment Score: {item.sentimentScore}/10
+        <div key={item.id} className="comment-article">
+          <div className="comment-article-box">
+            {/* Title Box */}
+            <div className="title-box">
+              <h4 className="comment-title">{item.title}</h4>
             </div>
-          </div>
-          <div className="video-details">
-            <h4>From Video: {item.title}</h4>
-            {item.videoUrl && (
+
+            {/* Comment Text Box */}
+            <div className="comment-text-box">
+              <blockquote className="comment-text">"{item.comment}"</blockquote>
+            </div>
+
+            {/* Sentiment Score Box */}
+            <div className="sentiment-box">
+              <span className="sentiment-label">Sentiment Score:</span>
+              <span className={`sentiment-score ${item.sentimentClass}`}>
+                {item.sentimentScore}/10
+              </span>
+            </div>
+
+            {/* View Video Button */}
+            {item.videoUrl && item.videoUrl !== '#' && (
               <a
                 href={item.videoUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="video-link"
+                className="read-more-button"
+                aria-label={`View video titled ${item.title}`}
               >
                 View Video
               </a>
