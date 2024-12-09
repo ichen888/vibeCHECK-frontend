@@ -28,7 +28,7 @@ const NewsSection = ({ influencerId }) => {
 
       try {
         setLoading(true);
-        const response = await fetch('http://127.0.0.1:8000/News');
+        const response = await fetch('https://vibecheck-backend-57495040685.us-central1.run.app/News');
 
         if (!response.ok) {
           throw new Error('Failed to fetch news articles');

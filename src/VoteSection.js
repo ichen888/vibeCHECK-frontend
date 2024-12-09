@@ -47,11 +47,11 @@ function VoteSection({ influencerId }) {
   const fetchVoteData = async () => {
     try {
       console.log('Fetching votes for influencer:', influencerId);
-      const response = await fetch(`http://127.0.0.1:8000/Votes/${influencerId}`);
+      const response = await fetch(`https://vibecheck-backend-57495040685.us-central1.run.app/Votes/${influencerId}`);
       
       if (!response.ok) {
         if (response.status === 404) {
-          const createResponse = await fetch('http://127.0.0.1:8000/Votes', {
+          const createResponse = await fetch('https://vibecheck-backend-57495040685.us-central1.run.app/Votes', {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
@@ -95,7 +95,7 @@ function VoteSection({ influencerId }) {
         bad_vote: isGoodVote ? 0 : 1
       };
 
-      const response = await fetch(`http://127.0.0.1:8000/Votes/${influencerId}`, {
+      const response = await fetch(`https://vibecheck-backend-57495040685.us-central1.run.app/Votes/${influencerId}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
