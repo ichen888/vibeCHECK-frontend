@@ -20,7 +20,7 @@ function Profile({ influencerId }) {
             }
 
             try {
-                const response = await fetch('http://127.0.0.1:8000/Influencers');
+                const response = await fetch('https://vibecheck-backend-57495040685.us-central1.run.app/Influencers');
                 if (!response.ok) {
                     throw new Error('Failed to fetch influencer data');
                 }
