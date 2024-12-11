@@ -131,16 +131,6 @@ The live backend server is hosted at: https://vibecheck-backend-57495040685.us-c
 
 Our development roadmap includes enhanced data visualization capabilities, advanced sentiment analysis algorithms, and improved mobile responsiveness. We plan to implement user preference systems, expand our historical data analysis tools, and introduce interactive chart features for deeper insight into sentiment trends.
 
-## API Endpoints
-
-The application currently interacts with the following endpoints:
-
-- `GET /Influencers`: Retrieves celebrity list
-- `GET /Content`: Fetches news and updates
-- `GET /Comments`: Retrieves user comments
-- `GET /Votes`: Retrieves votes
-- `POST /Votes`: Submits user votes (future implementation)
-
 ## License
 
 This project is licensed under the MIT License - see the LICENSE file for details.
