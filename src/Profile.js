@@ -4,6 +4,7 @@ import "./Profile.css";
 import NewsSection from './NewsSection';
 import RecentComments from './RecentComments';
 import VoteSection from './VoteSection';
+import VibeChart from './VibeChart';
 
 function Profile({ influencerId }) {
     const [influencerData, setInfluencerData] = useState(null);
@@ -11,30 +12,51 @@ function Profile({ influencerId }) {
     const [error, setError] = useState(null);
     const [showPopup, setShowPopup] = useState(false);
     const navigate = useNavigate();
+    const [vibeScoreHistory, setVibeScoreHistory] = useState([]);
 
     useEffect(() => {
         const fetchInfluencerData = async () => {
             if (!influencerId) {
+                console.log('No influencerId provided. Navigating back to homepage.');
                 navigate('/');
                 return;
             }
 
             try {
+                console.log('Fetching influencer data...');
                 const response = await fetch('https://vibecheck-backend-57495040685.us-central1.run.app/Influencers');
                 if (!response.ok) {
                     throw new Error('Failed to fetch influencer data');
                 }
 
                 const data = await response.json();
+                console.log('Fetched influencer data:', data);
+
                 const selectedInfluencer = data.find(inf => inf.id === influencerId);
-                
                 if (selectedInfluencer) {
+                    console.log('Selected Influencer:', selectedInfluencer);
                     setInfluencerData(selectedInfluencer);
                 } else {
+                    console.log('Influencer not found. Navigating back to homepage.');
                     navigate('/');
                 }
+
+                console.log('Fetching vibe score history...');
+                const vibeScoreResponse = await fetch(
+                    `https://vibecheck-backend-57495040685.us-central1.run.app/VibeScoreHistory?influencerId=${influencerId}`
+                );
+                if (!vibeScoreResponse.ok) throw new Error('Failed to fetch vibe score history');
+
+                const vibeScoreData = await vibeScoreResponse.json();
+                console.log('Fetched vibe score history:', vibeScoreData);
+
+                setVibeScoreHistory(
+                    vibeScoreData
+                        .sort((a, b) => new Date(a.recorded_at) - new Date(b.recorded_at))
+                        .slice(-10)
+                );
             } catch (err) {
-                console.error('Error:', err);
+                console.error('Error fetching data:', err);
                 setError('Failed to load influencer data');
             } finally {
                 setLoading(false);
@@ -45,27 +67,57 @@ function Profile({ influencerId }) {
     }, [influencerId, navigate]);
 
     const handleReturnHome = () => {
+        console.log('Return to homepage button clicked.');
         navigate('/');
     };
 
     const handlePopupOpen = () => {
+        console.log('Popup opened.');
         setShowPopup(true);
     };
 
     const handlePopupClose = () => {
+        console.log('Popup closed.');
         setShowPopup(false);
     };
 
     if (!influencerId) {
+        console.log('No influencerId provided. Navigating back to homepage.');
         navigate('/');
         return null;
     }
 
-    if (loading) return <div className="loading">Loading...</div>;
-    if (error) return <div className="error">{error}</div>;
-    if (!influencerData) return null;
+    if (loading) {
+        console.log('Page is loading...');
+        return <div className="loading">Loading...</div>;
+    }
 
+    if (error) {
+        console.error('Error encountered:', error);
+        return <div className="error">{error}</div>;
+    }
+
+    if (!influencerData) {
+        console.log('No influencer data found.');
+        return null;
+    }
+
+    // Calculate vibePercent
     const vibePercent = parseInt((influencerData.vibe_score * 100).toFixed(0), 10);
+    console.log('Calculated vibePercent:', vibePercent);
+
+    // Helper function to determine the background color class
+    const getVibeScoreClass = (percent) => {
+        console.log('Vibe Percent passed to getVibeScoreClass:', percent);
+        if (percent < 50) return 'red';
+        if (percent == 50) return 'yellow';
+        if (percent > 50) return 'green';
+    };
+
+    const assignedClass = getVibeScoreClass(vibePercent);
+    console.log('Assigned Class:', assignedClass);
+    console.log('ClassName Applied:', `vibe-score ${assignedClass}`); // Debugging the applied class
+
 
     return (
         <div className="profile-container">
@@ -101,8 +153,8 @@ function Profile({ influencerId }) {
                     <div className="profile-info">
                         <h1>{influencerData.name}</h1>
                         <div className="info-section">
-                            <div className="vibe-score">
-                                <h2>VibeScore: {vibePercent}%</h2>
+                            <div className={`vibe-score ${assignedClass}`}>
+                                VibeScore: {vibePercent}%
                             </div>
                             <div className="social-section">
                                 <h3>Find {influencerData.name} on Social Media:</h3>
@@ -136,17 +188,21 @@ function Profile({ influencerId }) {
                         </div>
                     </div>
                 </div>
-
+                <VoteSection 
+                    influencerId={influencerData.id} 
+                    currentVibeScore={influencerData.vibe_score}
+                />
                 <div className="about-section">
                     <h2>About {influencerData.name}:</h2>
                     <p className="bio-text">{influencerData.bio}</p>
                 </div>
 
-                <VoteSection 
-                    influencerId={influencerData.id} 
-                    currentVibeScore={influencerData.vibe_score}
-                />
-
+                <div className="chart-container">
+                    <VibeChart
+                        data={vibeScoreHistory.map(item => item.vibe_score * 100)}
+                        labels={vibeScoreHistory.map(item => new Date(item.recorded_at).toLocaleString())}
+                    />
+                </div>
                 <div className="content-sections">
                     <div className="news-container">
                         <h2>Recent News</h2>
