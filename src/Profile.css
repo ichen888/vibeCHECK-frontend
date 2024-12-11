@@ -27,15 +27,19 @@ body {
   margin-bottom: 20px;
 }
 
-.return-home-button {
+.return-home-button,
+.read-before-use-button {
   padding: 10px 20px;
-  background-color: #333;
-  color: #fff;
   border: none;
   border-radius: 5px;
   cursor: pointer;
-  font-size: 14px;
   transition: background-color 0.3s ease;
+}
+
+.return-home-button {
+  background-color: #333;
+  color: #fff;
+  font-size: 14px;
 }
 
 .return-home-button:hover {
@@ -45,12 +49,7 @@ body {
 .read-before-use-button {
   background-color: red;
   color: white;
-  border: none;
-  padding: 10px 15px;
-  border-radius: 5px;
-  cursor: pointer;
   font-weight: bold;
-  transition: background-color 0.3s ease;
 }
 
 .read-before-use-button:hover {
@@ -71,16 +70,16 @@ body {
 }
 
 .popup-content {
-  background-color: #ffffff;
+  background-color: #fff;
   color: #121212;
   padding: 20px;
   width: 80%;
   max-width: 600px;
+  max-height: 80%;
   border-radius: 8px;
   position: relative;
   text-align: left;
   overflow-y: auto;
-  max-height: 80%;
 }
 
 .close-button {
@@ -125,7 +124,7 @@ body {
 }
 
 .profile-info h1 {
-  margin: 0 0 5px 0;
+  margin: 0 0 5px;
   color: #fff;
   font-size: 40px;
 }
@@ -172,6 +171,10 @@ body {
   background-color: #222;
 }
 
+.about-section {
+  margin-bottom: 20px;
+}
+
 .bio-text {
   font-size: 16px;
   line-height: 1.5;
@@ -203,13 +206,9 @@ body {
   gap: 10px;
 }
 
-.comment-article-box {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-
-.title-box {
+.title-box,
+.comment-text-box,
+.sentiment-box {
   background-color: #333;
   padding: 10px;
   border-radius: 5px;
@@ -219,12 +218,6 @@ body {
   margin: 0;
   font-size: 1.2em;
   color: #fff;
-}
-
-.comment-text-box {
-  background-color: #333;
-  padding: 10px;
-  border-radius: 5px;
 }
 
 .comment-text {
@@ -238,9 +231,6 @@ body {
 }
 
 .sentiment-box {
-  background-color: #333;
-  padding: 10px;
-  border-radius: 5px;
   display: flex;
   align-items: center;
   gap: 10px;
@@ -259,60 +249,9 @@ body {
 }
 
 .read-more-button {
-  margin-top: 10px;
-  display: inline-block;
-  padding: 8px 16px;
-  background-color: #555;
-  color: #fff;
-  text-decoration: none;
-  border-radius: 4px;
-  font-size: 14px;
-  transition: background-color 0.3s ease;
-}
-
-.read-more-button:hover {
-  background-color: #777;
-}
-
-.sentiment-red {
-  background-color: #ffb3b3;
-  color: #000;
-}
-
-.sentiment-yellow {
-  background-color: #fff2b3;
-  color: #000;
-}
-
-.sentiment-green {
-  background-color: #b3ffb3;
-  color: #000;
-}
-
-
-.sentiment-default {
-  background-color: #555;
-}
-
-.comments-loading,
-.comments-error {
-  padding: 20px;
-  text-align: center;
-  font-size: 1.1em;
-  color: #bbb;
-}
-
-.sentiment-row {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-top: 10px;
-}
-
-.read-more-button {
   display: inline-block;
   padding: 8px 12px;
-  background-color: #0a234b;;
+  background-color: #0a234b;
   color: #f0e8e8;
   border: none;
   border-radius: 5px;
@@ -323,13 +262,43 @@ body {
 }
 
 .read-more-button:hover {
-  background-color: #0a234b;
   transform: translateY(-2px);
 }
 
 .read-more-button:focus {
   outline: none;
   box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.5);
+}
+
+.sentiment-red { background-color: #ffb3b3; color: #000; }
+.sentiment-yellow { background-color: #fff2b3; color: #000; }
+.sentiment-green { background-color: #b3ffb3; color: #000; }
+.sentiment-default { background-color: #555; }
+
+.chart-container {
+  padding: 10px;
+  margin-top: 20px;
+  background-color: #222;
+  border-radius: 8px;
+}
+
+.vibe-score {
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: white;
+  transition: background-color 0.3s ease;
+}
+
+.vibe-score.red { background-color: red !important; }
+.vibe-score.yellow { background-color: yellow !important; color: black; }
+.vibe-score.green { background-color: green !important; }
+
+.vote-section h2,
+.chart-container h2 {
+  text-align: center;
+  margin-top: 10px;
 }
 
 @media (max-width: 768px) {
@@ -360,47 +329,8 @@ body {
     margin-top: 5px;
   }
 
-  .comment-text {
-    margin-bottom: 5px;
-  }
-
   .read-more-button {
     font-size: 12px;
     padding: 6px 12px;
   }
-}
-.about-section {
-  margin-bottom: 20px; /* Add space below the "About Me" section */
-}
-
-.chart-container {
-  padding: 10;
-  margin-top: 20px; /* Ensure there's additional space */
-  background-color: #222; /* Optional: Chart background */
-  border-radius: 8px; /* Optional: Rounded corners for the chart container */
-}
-.vibe-score {
-  padding: 10px 20px;
-  border-radius: 8px;
-  font-size: 1.5rem;
-  font-weight: bold;
-  color: white; /* Default text color */
-  transition: background-color 0.3s ease; /* Smooth transition */
-}
-
-.vibe-score.red {
-  background-color: red !important;
-}
-
-.vibe-score.yellow {
-  background-color: yellow !important;
-  color: black; /* Improve text contrast */
-}
-
-.vibe-score.green {
-  background-color: green !important;
-}
-
-.vote-section h2, .chart-container h2 {
-  text-align: center;
 }
