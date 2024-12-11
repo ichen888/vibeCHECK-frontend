@@ -45,42 +45,37 @@ const VibeChart = ({ influencerId }) => {
 
         console.log("Sorted and filtered VibeScoreHistory (last 10):", sortedData);
 
-        // Convert UTC to EST and format labels
+        // Manually convert UTC to EST by subtracting 5 hours
+        // and create labels
         const extractedData = sortedData.map((item) => Math.max(0, item.vibe_score * 100));
         const extractedLabels = sortedData.map((item, index, array) => {
           const currentDate = new Date(item.recorded_at);
-
-          // Convert UTC to EST
-          const estDate = new Date(
-            currentDate.toLocaleString("en-US", { timeZone: "America/New_York" })
-          );
+          const estDate = new Date(currentDate.getTime() - 5 * 60 * 60 * 1000); // subtract 5 hours
 
           const previousDate =
             index > 0
-              ? new Date(
-                  new Date(array[index - 1].recorded_at).toLocaleString(
-                    "en-US",
-                    { timeZone: "America/New_York" }
-                  )
-                )
+              ? new Date(new Date(array[index - 1].recorded_at).getTime() - 5 * 60 * 60 * 1000)
               : null;
 
-          // Format label: Include date only if it differs from the previous timestamp
+          // If day changes, show month/day; otherwise, show time
           if (!previousDate || estDate.toDateString() !== previousDate.toDateString()) {
+            // Show month/day
             return estDate.toLocaleDateString("en-US", {
               month: "short",
               day: "numeric",
             });
           } else {
+            // Show 12-hour time with AM/PM
             return estDate.toLocaleTimeString("en-US", {
-              hour: "2-digit",
+              hour: "numeric",
               minute: "2-digit",
+              hour12: true,
             });
           }
         });
 
         console.log("Extracted data for Y-axis (vibe scores):", extractedData);
-        console.log("Extracted labels for X-axis (formatted to EST):", extractedLabels);
+        console.log("Extracted labels for X-axis (EST):", extractedLabels);
 
         setData(extractedData);
         setLabels(extractedLabels);
@@ -106,25 +101,25 @@ const VibeChart = ({ influencerId }) => {
       console.log("No data or labels to render chart.");
       return;
     }
-  
+
     console.log("Rendering chart with data:", data);
     console.log("Rendering chart with labels:", labels);
-  
+
     const canvas = canvasRef.current;
     const ctx = canvas.getContext("2d");
-  
+
     const width = 800;
     const height = 300;
     canvas.width = width;
     canvas.height = height;
-  
+
     const padding = 70;
     const maxData = Math.max(...data, 1); // Prevent division by zero
     const minData = 0; // Y-axis starts at 0
     const avgData = data.reduce((sum, value) => sum + value, 0) / data.length; // Calculate average
-  
+
     ctx.clearRect(0, 0, width, height);
-  
+
     // Draw X-axis (white line)
     ctx.beginPath();
     ctx.moveTo(padding, height - padding); // Start of X-axis
@@ -132,7 +127,7 @@ const VibeChart = ({ influencerId }) => {
     ctx.strokeStyle = "#FFFFFF"; // White color for X-axis
     ctx.lineWidth = 2;
     ctx.stroke();
-  
+
     // Draw Y-axis (white line)
     ctx.beginPath();
     ctx.moveTo(padding, height - padding); // Start of Y-axis
@@ -140,7 +135,7 @@ const VibeChart = ({ influencerId }) => {
     ctx.strokeStyle = "#FFFFFF"; // White color for Y-axis
     ctx.lineWidth = 2;
     ctx.stroke();
-  
+
     // Y-Axis Labels
     ctx.fillStyle = "#fff";
     ctx.font = "12px Arial";
@@ -157,7 +152,7 @@ const VibeChart = ({ influencerId }) => {
     ctx.textAlign = "center";
     ctx.fillText("Vibe Scores", 0, 0);
     ctx.restore();
-  
+
     // X-Axis Labels
     ctx.textAlign = "center";
     labels.forEach((label, index) => {
@@ -165,7 +160,7 @@ const VibeChart = ({ influencerId }) => {
       ctx.fillText(label, x, height - padding + 30);
     });
     ctx.fillText("Date & Time", width / 2, height - padding + 50);
-  
+
     // Draw average line (red)
     const avgY = height - padding - ((avgData - minData) / (maxData - minData)) * (height - 2 * padding);
     ctx.beginPath();
@@ -176,13 +171,13 @@ const VibeChart = ({ influencerId }) => {
     ctx.lineWidth = 2;
     ctx.stroke();
     ctx.setLineDash([]);
-  
+
     // Label the average line
     ctx.fillStyle = "red";
     ctx.font = "12px Arial";
     ctx.textAlign = "left";
     ctx.fillText("Average", width - padding - 70, avgY - 5);
-  
+
     // Draw data points and line
     ctx.beginPath();
     data.forEach((value, index) => {
@@ -197,24 +192,24 @@ const VibeChart = ({ influencerId }) => {
     ctx.strokeStyle = "#00ff00"; // Green line for data
     ctx.lineWidth = 2;
     ctx.stroke();
-  
+
     // Label the data line
     ctx.fillStyle = "#00ff00";
     ctx.font = "12px Arial";
     ctx.textAlign = "left";
     ctx.fillText("Data Line", padding + 10, padding + 20);
-  
+
     // Draw individual points and text bubbles
     data.forEach((value, index) => {
       const x = padding + (index * (width - 2 * padding)) / (data.length - 1);
       const y = height - padding - ((value - minData) / (maxData - minData)) * (height - 2 * padding);
-  
+
       // Draw the point
       ctx.beginPath();
       ctx.arc(x, y, 4, 0, 2 * Math.PI);
       ctx.fillStyle = "#00ff00";
       ctx.fill();
-  
+
       // Draw text bubble with score
       ctx.beginPath();
       ctx.fillStyle = "#333"; // Dark gray interior
@@ -229,8 +224,8 @@ const VibeChart = ({ influencerId }) => {
       ctx.textAlign = "center";
       ctx.fillText(value.toFixed(2), x + 10, y - 12); // Centered score text
     });
-  }, [data, labels]);  
-   
+  }, [data, labels]);
+
   return (
     <div
       style={{
