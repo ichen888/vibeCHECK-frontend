@@ -38,7 +38,7 @@ const NewsSection = ({ influencerId }) => {
 
         const filteredArticles = data
         .filter((item) => item.influencer_id === influencerId)
-        .sort((a, b) => new Date(b.date || 0) - new Date(a.date || 0))
+        .sort((a, b) => b.id - a.id)
         .slice(0, 5)
         .map((item) => {
           // Format sentimentScore

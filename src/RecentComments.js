@@ -54,8 +54,8 @@ const RecentComments = ({ influencerId }) => {
 
         const filteredComments = data
           .filter((item) => item.influencer_id === influencerId)
-          .sort((a, b) => new Date(b.date || 0) - new Date(a.date || 0))
-          .slice(0, 4) // Pull 6 comments
+          .sort((a, b) => b.id - a.id)
+          .slice(0, 6) // Pull 6 comments
           .map((item) => {
             // Format sentimentScore
             let sentimentScore = 'N/A';
