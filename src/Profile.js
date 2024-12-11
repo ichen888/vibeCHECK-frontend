@@ -137,7 +137,7 @@ function Profile({ influencerId }) {
                             &times;
                         </button>
                         <p>
-                            VibeCHECK gives celebrity profiles that users can look at to vote on their recent news and comments in the media. The recent news and comments are listed, where we've ran each news article title or comment through our sentiment analysis program. A score is given between 1-10 that provides our algorithm's analysis of the positive or negative mood of each source. Based on that information, users are welcome to vote Good or Bad, which then gets aggregated into our general score of Good or Bad per celebrity.
+                            VibeCHECK gives celebrity profiles that users can look at to vote on their recent news and comments in the media. The recent news and comments are listed, where we've ran each news article title or comment through our sentiment analysis program. A score is given between 1-10 that provides our algorithm's analysis of the positive or negative mood of each source. Based on that information, users are welcome to vote Good or Bad, which then gets aggregated into our trademarked VibeScore per celebrity.
                         </p>
                     </div>
                 </div>
