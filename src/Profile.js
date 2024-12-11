@@ -110,12 +110,14 @@ function Profile({ influencerId }) {
     const getVibeScoreClass = (percent) => {
         console.log('Vibe Percent passed to getVibeScoreClass:', percent);
         if (percent < 50) return 'red';
-        if (percent === 50) return 'yellow';
-        return 'green';
+        if (percent == 50) return 'yellow';
+        if (percent > 50) return 'green';
     };
 
     const assignedClass = getVibeScoreClass(vibePercent);
     console.log('Assigned Class:', assignedClass);
+    console.log('ClassName Applied:', `vibe-score ${assignedClass}`); // Debugging the applied class
+
 
     return (
         <div className="profile-container">
