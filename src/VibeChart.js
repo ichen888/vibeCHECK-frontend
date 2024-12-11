@@ -119,12 +119,20 @@ const VibeChart = ({ influencerId }) => {
   
     ctx.clearRect(0, 0, width, height);
   
-    // Draw axes
+    // Draw X-axis (white line)
     ctx.beginPath();
-    ctx.moveTo(padding, height - padding); // Y-axis
-    ctx.lineTo(padding, padding); // X-axis
-    ctx.lineTo(width - padding, height - padding); // X-axis
-    ctx.strokeStyle = "#ffffff";
+    ctx.moveTo(padding, height - padding); // Start of X-axis
+    ctx.lineTo(width - padding, height - padding); // End of X-axis
+    ctx.strokeStyle = "#FFFFFF"; // White color for X-axis
+    ctx.lineWidth = 2;
+    ctx.stroke();
+  
+    // Draw Y-axis (white line)
+    ctx.beginPath();
+    ctx.moveTo(padding, height - padding); // Start of Y-axis
+    ctx.lineTo(padding, padding); // End of Y-axis
+    ctx.strokeStyle = "#FFFFFF"; // White color for Y-axis
+    ctx.lineWidth = 2;
     ctx.stroke();
   
     // Y-Axis Labels
@@ -152,32 +160,45 @@ const VibeChart = ({ influencerId }) => {
     });
     ctx.fillText("Date & Time", width / 2, height - padding + 50);
   
-    // Draw average line
-    const avgY = height - padding - ((avgData - minData) / (maxData - minData)) * (height - 2 * padding);
-    ctx.beginPath();
-    ctx.moveTo(padding, avgY);
-    ctx.lineTo(width - padding, avgY);
-    ctx.strokeStyle = "red";
-    ctx.setLineDash([5, 5]); // Dotted line
-    ctx.lineWidth = 1;
-    ctx.stroke();
-    ctx.setLineDash([]);
+    // Draw average line (red)
+    // Draw average line (red)
+      const avgY = height - padding - ((avgData - minData) / (maxData - minData)) * (height - 2 * padding);
+      ctx.beginPath();
+      ctx.moveTo(padding, avgY);
+      ctx.lineTo(width - padding, avgY);
+      ctx.strokeStyle = "red";
+      ctx.setLineDash([5, 5]); // Dotted line style
+      ctx.lineWidth = 2;
+      ctx.stroke();
+      ctx.setLineDash([]);
+
+      // Label the average line
+      ctx.fillStyle = "red";
+      ctx.font = "12px Arial";
+      ctx.textAlign = "left";
+      ctx.fillText("Average", width - padding - 70, avgY - 5);
   
     // Draw data points and line
-    ctx.beginPath();
-    data.forEach((value, index) => {
-      const x = padding + (index * (width - 2 * padding)) / (data.length - 1);
-      const y = height - padding - ((value - minData) / (maxData - minData)) * (height - 2 * padding);
-      if (index === 0) {
-        ctx.moveTo(x, y);
-      } else {
-        ctx.lineTo(x, y);
-      }
-    });
-    ctx.strokeStyle = "#00ff00";
-    ctx.lineWidth = 2;
-    ctx.stroke();
-  
+      ctx.beginPath();
+      data.forEach((value, index) => {
+        const x = padding + (index * (width - 2 * padding)) / (data.length - 1);
+        const y = height - padding - ((value - minData) / (maxData - minData)) * (height - 2 * padding);
+        if (index === 0) {
+          ctx.moveTo(x, y);
+        } else {
+          ctx.lineTo(x, y);
+        }
+      });
+      ctx.strokeStyle = "#00ff00"; // Green line for data
+      ctx.lineWidth = 2;
+      ctx.stroke();
+
+      // Label the data line
+      ctx.fillStyle = "#00ff00";
+      ctx.font = "12px Arial";
+      ctx.textAlign = "left";
+      ctx.fillText("Data Line", padding + 10, padding + 20);
+
     // Draw individual points and text bubbles
     data.forEach((value, index) => {
       const x = padding + (index * (width - 2 * padding)) / (data.length - 1);
@@ -191,17 +212,21 @@ const VibeChart = ({ influencerId }) => {
   
       // Draw text bubble with score
       ctx.beginPath();
-      ctx.fillStyle = "#333";
+      ctx.fillStyle = "#333"; // Dark gray interior
       ctx.fillRect(x - 10, y - 25, 40, 20); // Bubble background
-      ctx.strokeStyle = "#00ff00";
+      ctx.strokeStyle = "#0000FF"; // Blue outline
+      ctx.lineWidth = 2; // Thickness of the outline
       ctx.strokeRect(x - 10, y - 25, 40, 20); // Bubble border
-      ctx.fillStyle = "#fff";
+
+      // Add white text for the score
+      ctx.fillStyle = "#fff"; // White text
       ctx.font = "10px Arial";
       ctx.textAlign = "center";
-      ctx.fillText(value.toFixed(2), x + 10, y - 12); // Score text
+      ctx.fillText(value.toFixed(2), x + 10, y - 12); // Centered score text
+
     });
   }, [data, labels]);  
-
+   
   return (
     <div
       style={{
