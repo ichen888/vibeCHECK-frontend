@@ -39,6 +39,7 @@ function VoteSection({ influencerId }) {
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState('');
 
+  // Debug logging for state changes
   useEffect(() => {
     console.log('Vote data updated:', voteData);
   }, [voteData]);
@@ -71,6 +72,8 @@ function VoteSection({ influencerId }) {
   
       const data = await response.json();
       console.log('Received vote data:', data);
+      
+      // Fix the data parsing - assuming the array format is [id, influencer_id, good_vote, bad_vote]
       setVoteData({
         good_vote: Number(data[2]), // good_vote is at index 2
         bad_vote: Number(data[3])   // bad_vote is at index 3
@@ -104,6 +107,7 @@ function VoteSection({ influencerId }) {
         throw new Error('Failed to update vote');
       }
 
+      // Important: Fetch the updated vote data immediately after successful vote
       await fetchVoteData();
       setMessage('Vote recorded!');
     } catch (error) {
@@ -115,6 +119,7 @@ function VoteSection({ influencerId }) {
     }
   };
 
+  // Fetch initial vote data
   useEffect(() => {
     if (influencerId) {
       fetchVoteData();
@@ -123,6 +128,7 @@ function VoteSection({ influencerId }) {
 
   const totalVotes = Number(voteData.good_vote) + Number(voteData.bad_vote);
   const goodPercentage = totalVotes ? Math.round((voteData.good_vote / totalVotes) * 100) : 50;
+  // Add badPercentage calculation
   const badPercentage = totalVotes ? Math.round((voteData.bad_vote / totalVotes) * 100) : 50;
 
   return (
@@ -131,10 +137,9 @@ function VoteSection({ influencerId }) {
         <div style={{
           padding: '10px',
           marginBottom: '10px',
-          backgroundColor: loading ? '#e6ac00' : message.includes('Error') ? '#cc0000' : '#006400',
+          backgroundColor: loading ? '#fff3cd' : message.includes('Error') ? '#f8d7da' : '#d4edda',
           borderRadius: '5px',
-          textAlign: 'center',
-          color: '#fff'
+          textAlign: 'center'
         }}>
           {message}
         </div>

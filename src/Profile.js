@@ -4,7 +4,6 @@ import "./Profile.css";
 import NewsSection from './NewsSection';
 import RecentComments from './RecentComments';
 import VoteSection from './VoteSection';
-import VibeChart from './VibeChart';
 
 function Profile({ influencerId }) {
     const [influencerData, setInfluencerData] = useState(null);
@@ -12,7 +11,6 @@ function Profile({ influencerId }) {
     const [error, setError] = useState(null);
     const [showPopup, setShowPopup] = useState(false);
     const navigate = useNavigate();
-    const [vibeScoreHistory, setVibeScoreHistory] = useState([]);
 
     useEffect(() => {
         const fetchInfluencerData = async () => {
@@ -35,16 +33,6 @@ function Profile({ influencerId }) {
                 } else {
                     navigate('/');
                 }
-                const vibeScoreResponse = await fetch(
-                    `https://vibecheck-backend-57495040685.us-central1.run.app/VibeScoreHistory?influencerId=${influencerId}`
-                );
-                if (!vibeScoreResponse.ok) throw new Error('Failed to fetch vibe score history');
-                const vibeScoreData = await vibeScoreResponse.json();
-                setVibeScoreHistory(
-                    vibeScoreData
-                        .sort((a, b) => new Date(a.recorded_at) - new Date(b.recorded_at)) // Sort by date
-                        .slice(-10) // Last 10 entries
-                );
             } catch (err) {
                 console.error('Error:', err);
                 setError('Failed to load influencer data');
@@ -52,7 +40,7 @@ function Profile({ influencerId }) {
                 setLoading(false);
             }
         };
-    
+
         fetchInfluencerData();
     }, [influencerId, navigate]);
 
@@ -148,22 +136,17 @@ function Profile({ influencerId }) {
                         </div>
                     </div>
                 </div>
+
+                <div className="about-section">
+                    <h2>About {influencerData.name}:</h2>
+                    <p className="bio-text">{influencerData.bio}</p>
+                </div>
+
                 <VoteSection 
                     influencerId={influencerData.id} 
                     currentVibeScore={influencerData.vibe_score}
                 />
-                <div className="about-section">
-                    <h2>About {influencerData.name}:</h2>
-                    <p className="bio-text">{influencerData.bio}</p>
-                    </div>
 
-                    {/* Render VibeChart */}
-                    <div className="chart-container">
-                    <VibeChart
-                        data={vibeScoreHistory.map(item => item.vibe_score * 100)}
-                        labels={vibeScoreHistory.map(item => new Date(item.recorded_at).toLocaleString())}
-                    />
-                    </div>
                 <div className="content-sections">
                     <div className="news-container">
                         <h2>Recent News</h2>

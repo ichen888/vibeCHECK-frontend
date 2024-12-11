@@ -125,9 +125,9 @@ body {
 }
 
 .profile-info h1 {
-  margin: 0 0 5px 0;
+  margin: 0 0 10px 0;
   color: #fff;
-  font-size: 40px;
+  font-size: 24px;
 }
 
 /* Keep original vibe-score styling with white text */
@@ -378,14 +378,4 @@ body {
     font-size: 12px;
     padding: 6px 12px;
   }
-}
-.about-section {
-  margin-bottom: 20px; /* Add space below the "About Me" section */
-}
-
-.chart-container {
-  padding: 10;
-  margin-top: 20px; /* Ensure there's additional space */
-  background-color: #222; /* Optional: Chart background */
-  border-radius: 8px; /* Optional: Rounded corners for the chart container */
 }
