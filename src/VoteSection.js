@@ -106,6 +106,10 @@ function VoteSection({ influencerId }) {
 
       await fetchVoteData();
       setMessage('Vote recorded!');
+
+      // Notifies Parent to Fetch 
+      onVoteSubmitted();
+
     } catch (error) {
       console.error('Vote error:', error);
       setMessage('Error submitting vote');

@@ -6,65 +6,56 @@ import RecentComments from './RecentComments';
 import VoteSection from './VoteSection';
 import VibeChart from './VibeChart';
 
-function Profile({ influencerId }) {
-    const [influencerData, setInfluencerData] = useState(null);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(null);
-    const [showPopup, setShowPopup] = useState(false);
-    const navigate = useNavigate();
-    const [vibeScoreHistory, setVibeScoreHistory] = useState([]);
+function Profile({ influencerId, voteRefresh, onVoteSubmitted }) {
+  const [influencerData, setInfluencerData] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [showPopup, setShowPopup] = useState(false);
+  const navigate = useNavigate();
+  const [vibeScoreHistory, setVibeScoreHistory] = useState([]);
 
-    useEffect(() => {
-        const fetchInfluencerData = async () => {
-            if (!influencerId) {
-                console.log('No influencerId provided. Navigating back to homepage.');
-                navigate('/');
-                return;
-            }
+  useEffect(() => {
+    const fetchInfluencerData = async () => {
+      if (!influencerId) {
+        console.log('No influencerId provided. Navigating back to homepage.');
+        navigate('/');
+        return;
+      }
 
-            try {
-                console.log('Fetching influencer data...');
-                const response = await fetch('https://vibecheck-backend-57495040685.us-central1.run.app/Influencers');
-                if (!response.ok) {
-                    throw new Error('Failed to fetch influencer data');
-                }
+      try {
+        const response = await fetch('https://vibecheck-backend-57495040685.us-central1.run.app/Influencers');
+        if (!response.ok) {
+          throw new Error('Failed to fetch influencer data');
+        }
+        const data = await response.json();
+        
+        const selectedInfluencer = data.find(inf => inf.id === influencerId);
+        if (selectedInfluencer) {
+          setInfluencerData(selectedInfluencer);
+        } else {
+          navigate('/');
+        }
 
-                const data = await response.json();
-                console.log('Fetched influencer data:', data);
+        const vibeScoreResponse = await fetch(
+          `https://vibecheck-backend-57495040685.us-central1.run.app/VibeScoreHistory?influencerId=${influencerId}`
+        );
+        if (!vibeScoreResponse.ok) throw new Error('Failed to fetch vibe score history');
+        const vibeScoreData = await vibeScoreResponse.json();
+        
+        setVibeScoreHistory(
+          vibeScoreData
+            .sort((a, b) => new Date(a.recorded_at) - new Date(b.recorded_at))
+            .slice(-10)
+        );
+      } catch (err) {
+        setError('Failed to load influencer data');
+      } finally {
+        setLoading(false);
+      }
+    };
 
-                const selectedInfluencer = data.find(inf => inf.id === influencerId);
-                if (selectedInfluencer) {
-                    console.log('Selected Influencer:', selectedInfluencer);
-                    setInfluencerData(selectedInfluencer);
-                } else {
-                    console.log('Influencer not found. Navigating back to homepage.');
-                    navigate('/');
-                }
-
-                console.log('Fetching vibe score history...');
-                const vibeScoreResponse = await fetch(
-                    `https://vibecheck-backend-57495040685.us-central1.run.app/VibeScoreHistory?influencerId=${influencerId}`
-                );
-                if (!vibeScoreResponse.ok) throw new Error('Failed to fetch vibe score history');
-
-                const vibeScoreData = await vibeScoreResponse.json();
-                console.log('Fetched vibe score history:', vibeScoreData);
-
-                setVibeScoreHistory(
-                    vibeScoreData
-                        .sort((a, b) => new Date(a.recorded_at) - new Date(b.recorded_at))
-                        .slice(-10)
-                );
-            } catch (err) {
-                console.error('Error fetching data:', err);
-                setError('Failed to load influencer data');
-            } finally {
-                setLoading(false);
-            }
-        };
-
-        fetchInfluencerData();
-    }, [influencerId, navigate]);
+    fetchInfluencerData();
+  }, [influencerId, navigate, voteRefresh]);
 
     const handleReturnHome = () => {
         console.log('Return to homepage button clicked.');
