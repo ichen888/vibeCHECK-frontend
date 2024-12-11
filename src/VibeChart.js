@@ -35,13 +35,13 @@ const VibeChart = ({ influencerId }) => {
           console.warn("No data found for this influencerId.");
         }
 
-        // Sort by recorded_at and get the last 15 updates
+        // Sort by recorded_at and get the last 10 updates
         const sortedData = filteredData
           .sort((a, b) => new Date(b.recorded_at) - new Date(a.recorded_at))
-          .slice(0, 15)
+          .slice(0, 10)
           .reverse(); // Reverse to show the oldest first
 
-        console.log("Sorted and filtered VibeScoreHistory (last 15):", sortedData);
+        console.log("Sorted and filtered VibeScoreHistory (last 10):", sortedData);
 
         // Convert UTC to EST and format labels
         const extractedData = sortedData.map((item) => Math.max(0, item.vibe_score * 100));

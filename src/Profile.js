@@ -14,30 +14,6 @@ function Profile({ influencerId }) {
   const navigate = useNavigate();
   const [vibeScoreHistory, setVibeScoreHistory] = useState([]);
 
-  // Fetch the vibe score history
-  const fetchVibeScoreHistory = async () => {
-    try {
-      console.log("Fetching vibe score history...");
-      const response = await fetch(
-        `https://vibecheck-backend-57495040685.us-central1.run.app/VibeScoreHistory?influencerId=${influencerId}`
-      );
-      if (!response.ok) throw new Error("Failed to fetch vibe score history");
-
-      const vibeScoreData = await response.json();
-      console.log("Fetched vibe score history:", vibeScoreData);
-
-      setVibeScoreHistory(
-        vibeScoreData.sort(
-          (a, b) => new Date(a.recorded_at) - new Date(b.recorded_at)
-        )
-      );
-    } catch (err) {
-      console.error("Error fetching vibe score history:", err);
-      setError("Failed to load vibe score history");
-    }
-  };
-
-  // Fetch influencer data
   useEffect(() => {
     const fetchInfluencerData = async () => {
       if (!influencerId) {
@@ -51,7 +27,9 @@ function Profile({ influencerId }) {
         const response = await fetch(
           "https://vibecheck-backend-57495040685.us-central1.run.app/Influencers"
         );
-        if (!response.ok) throw new Error("Failed to fetch influencer data");
+        if (!response.ok) {
+          throw new Error("Failed to fetch influencer data");
+        }
 
         const data = await response.json();
         console.log("Fetched influencer data:", data);
@@ -65,7 +43,21 @@ function Profile({ influencerId }) {
           navigate("/");
         }
 
-        await fetchVibeScoreHistory(); // Fetch vibe score history after influencer data
+        console.log("Fetching vibe score history...");
+        const vibeScoreResponse = await fetch(
+          `https://vibecheck-backend-57495040685.us-central1.run.app/VibeScoreHistory?influencerId=${influencerId}`
+        );
+        if (!vibeScoreResponse.ok)
+          throw new Error("Failed to fetch vibe score history");
+
+        const vibeScoreData = await vibeScoreResponse.json();
+        console.log("Fetched vibe score history:", vibeScoreData);
+
+        setVibeScoreHistory(
+          vibeScoreData.sort(
+            (a, b) => new Date(a.recorded_at) - new Date(b.recorded_at)
+          )
+        );
       } catch (err) {
         console.error("Error fetching data:", err);
         setError("Failed to load influencer data");
@@ -219,20 +211,13 @@ function Profile({ influencerId }) {
           <h2>Your Votes</h2>
           <VoteSection
             influencerId={influencerData.id}
-            onVote={fetchVibeScoreHistory} // Trigger a refresh of the chart
+            currentVibeScore={influencerData.vibe_score}
           />
         </div>
 
         <div className="chart-container">
           <h2>Recent VibeScore Trend</h2>
-          <VibeChart
-            data={vibeScoreHistory.map((item) => item.vibe_score * 100)}
-            labels={vibeScoreHistory.map((item) =>
-              new Date(item.recorded_at).toLocaleString("en-US", {
-                timeZone: "America/New_York",
-              })
-            )}
-          />
+          <VibeChart influencerId={influencerId} />
         </div>
         <div className="content-sections">
           <div className="news-container">
