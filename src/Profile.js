@@ -154,7 +154,8 @@ function Profile({ influencerId }) {
                         <h1>{influencerData.name}</h1>
                         <div className="info-section">
                             <div className={`vibe-score ${assignedClass}`}>
-                                VibeScore: {vibePercent}%
+                                VibeScore: {vibePercent}/100 
+                                <h3>Aggregated with Votes & Content Sentiment Analysis</h3>
                             </div>
                             <div className="social-section">
                                 <h3>Find {influencerData.name} on Social Media:</h3>
