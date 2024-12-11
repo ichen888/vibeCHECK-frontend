@@ -188,16 +188,22 @@ function Profile({ influencerId }) {
                         </div>
                     </div>
                 </div>
-                <VoteSection 
-                    influencerId={influencerData.id} 
-                    currentVibeScore={influencerData.vibe_score}
-                />
+
                 <div className="about-section">
                     <h2>About {influencerData.name}:</h2>
                     <p className="bio-text">{influencerData.bio}</p>
                 </div>
 
+                <div className="vote-section">
+                <h2>Your Votes</h2>
+                    <VoteSection 
+                        influencerId={influencerData.id} 
+                        currentVibeScore={influencerData.vibe_score}
+                    />
+                </div>
+
                 <div className="chart-container">
+                    <h2>Recent VibeScore Trend</h2>
                     <VibeChart
                         data={vibeScoreHistory.map(item => item.vibe_score * 100)}
                         labels={vibeScoreHistory.map(item => new Date(item.recorded_at).toLocaleString())}
@@ -205,11 +211,11 @@ function Profile({ influencerId }) {
                 </div>
                 <div className="content-sections">
                     <div className="news-container">
-                        <h2>Recent News</h2>
+                        <h2>Recent News Articles</h2>
                         <NewsSection influencerId={influencerData.id} />
                     </div>
                     <div className="comments-container">
-                        <h2>Recent Comments</h2>
+                        <h2>Recent Public Comments</h2>
                         <RecentComments influencerId={influencerData.id} />
                     </div>
                 </div>
