@@ -130,16 +130,6 @@ body {
   font-size: 40px;
 }
 
-/* Keep original vibe-score styling with white text */
-.vibe-score {
-  padding: 10px 20px;
-  background: linear-gradient(to right, #28a745, #218838);
-  color: #fff; /* text is white */
-  border-radius: 25px;
-  font-size: 24px;
-  flex-shrink: 0;
-}
-
 .info-section {
   display: flex;
   align-items: center;
