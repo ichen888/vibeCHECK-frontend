@@ -6,6 +6,8 @@ const VibeChart = ({ influencerId }) => {
   const [labels, setLabels] = useState([]);
 
   useEffect(() => {
+    let intervalId;
+
     const fetchVibeScoreHistory = async () => {
       if (!influencerId) {
         console.log("No influencerId provided. Skipping fetch.");
@@ -49,11 +51,9 @@ const VibeChart = ({ influencerId }) => {
           const currentDate = new Date(item.recorded_at);
 
           // Convert UTC to EST
-          // Convert UTC to EST for each timestamp
           const estDate = new Date(
             currentDate.toLocaleString("en-US", { timeZone: "America/New_York" })
           );
-
 
           const previousDate =
             index > 0
@@ -66,10 +66,7 @@ const VibeChart = ({ influencerId }) => {
               : null;
 
           // Format label: Include date only if it differs from the previous timestamp
-          if (
-            !previousDate ||
-            estDate.toDateString() !== previousDate.toDateString()
-          ) {
+          if (!previousDate || estDate.toDateString() !== previousDate.toDateString()) {
             return estDate.toLocaleDateString("en-US", {
               month: "short",
               day: "numeric",
@@ -92,7 +89,16 @@ const VibeChart = ({ influencerId }) => {
       }
     };
 
+    // Initial fetch
     fetchVibeScoreHistory();
+
+    // Set interval for 5-minute refresh
+    intervalId = setInterval(() => {
+      fetchVibeScoreHistory();
+    }, 300000); // 5 minutes in milliseconds
+
+    // Cleanup interval on unmount
+    return () => clearInterval(intervalId);
   }, [influencerId]);
 
   useEffect(() => {
@@ -161,44 +167,43 @@ const VibeChart = ({ influencerId }) => {
     ctx.fillText("Date & Time", width / 2, height - padding + 50);
   
     // Draw average line (red)
-    // Draw average line (red)
-      const avgY = height - padding - ((avgData - minData) / (maxData - minData)) * (height - 2 * padding);
-      ctx.beginPath();
-      ctx.moveTo(padding, avgY);
-      ctx.lineTo(width - padding, avgY);
-      ctx.strokeStyle = "red";
-      ctx.setLineDash([5, 5]); // Dotted line style
-      ctx.lineWidth = 2;
-      ctx.stroke();
-      ctx.setLineDash([]);
-
-      // Label the average line
-      ctx.fillStyle = "red";
-      ctx.font = "12px Arial";
-      ctx.textAlign = "left";
-      ctx.fillText("Average", width - padding - 70, avgY - 5);
+    const avgY = height - padding - ((avgData - minData) / (maxData - minData)) * (height - 2 * padding);
+    ctx.beginPath();
+    ctx.moveTo(padding, avgY);
+    ctx.lineTo(width - padding, avgY);
+    ctx.strokeStyle = "red";
+    ctx.setLineDash([5, 5]); // Dotted line style
+    ctx.lineWidth = 2;
+    ctx.stroke();
+    ctx.setLineDash([]);
+  
+    // Label the average line
+    ctx.fillStyle = "red";
+    ctx.font = "12px Arial";
+    ctx.textAlign = "left";
+    ctx.fillText("Average", width - padding - 70, avgY - 5);
   
     // Draw data points and line
-      ctx.beginPath();
-      data.forEach((value, index) => {
-        const x = padding + (index * (width - 2 * padding)) / (data.length - 1);
-        const y = height - padding - ((value - minData) / (maxData - minData)) * (height - 2 * padding);
-        if (index === 0) {
-          ctx.moveTo(x, y);
-        } else {
-          ctx.lineTo(x, y);
-        }
-      });
-      ctx.strokeStyle = "#00ff00"; // Green line for data
-      ctx.lineWidth = 2;
-      ctx.stroke();
-
-      // Label the data line
-      ctx.fillStyle = "#00ff00";
-      ctx.font = "12px Arial";
-      ctx.textAlign = "left";
-      ctx.fillText("Data Line", padding + 10, padding + 20);
-
+    ctx.beginPath();
+    data.forEach((value, index) => {
+      const x = padding + (index * (width - 2 * padding)) / (data.length - 1);
+      const y = height - padding - ((value - minData) / (maxData - minData)) * (height - 2 * padding);
+      if (index === 0) {
+        ctx.moveTo(x, y);
+      } else {
+        ctx.lineTo(x, y);
+      }
+    });
+    ctx.strokeStyle = "#00ff00"; // Green line for data
+    ctx.lineWidth = 2;
+    ctx.stroke();
+  
+    // Label the data line
+    ctx.fillStyle = "#00ff00";
+    ctx.font = "12px Arial";
+    ctx.textAlign = "left";
+    ctx.fillText("Data Line", padding + 10, padding + 20);
+  
     // Draw individual points and text bubbles
     data.forEach((value, index) => {
       const x = padding + (index * (width - 2 * padding)) / (data.length - 1);
@@ -223,7 +228,6 @@ const VibeChart = ({ influencerId }) => {
       ctx.font = "10px Arial";
       ctx.textAlign = "center";
       ctx.fillText(value.toFixed(2), x + 10, y - 12); // Centered score text
-
     });
   }, [data, labels]);  
    
