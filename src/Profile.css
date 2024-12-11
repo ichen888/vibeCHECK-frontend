@@ -389,3 +389,25 @@ body {
   background-color: #222; /* Optional: Chart background */
   border-radius: 8px; /* Optional: Rounded corners for the chart container */
 }
+.vibe-score {
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: white; /* Default text color */
+  transition: background-color 0.3s ease; /* Smooth transition */
+}
+
+.vibe-score.red {
+  background-color: red !important;
+}
+
+.vibe-score.yellow {
+  background-color: yellow !important;
+  color: black; /* Improve text contrast */
+}
+
+.vibe-score.green {
+  background-color: green !important;
+}
+
