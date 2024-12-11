@@ -151,17 +151,8 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 - UI/UX design reference from Figma
 - React.js community and documentation
 
-## Future Improvements
+## Contributors
 
-- Implement user authentication
-- Add social media integration
-- Expand celebrity database
-- Enhance voting system
-- Add real-time updates
-- Implement comment functionality
+The front end was designed & built by Ian Chen and Jessica Yu, with additional support from Kyrie Park and Harsh Sahu, the primary backend developers.
 
 For more information about the backend implementation, visit the [Backend Repository](https://github.com/Kyrie21323/FinalProject).
-
-
-Citations:
-[1] https://github.com/ichen888/vibeCHECK-frontend.
