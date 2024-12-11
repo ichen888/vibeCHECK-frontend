@@ -322,8 +322,8 @@ body {
 .read-more-button {
   display: inline-block;
   padding: 8px 12px;
-  background-color: #007bff;
-  color: #fff;
+  background-color: #0a234b;;
+  color: #f0e8e8;
   border: none;
   border-radius: 5px;
   cursor: pointer;
@@ -333,7 +333,7 @@ body {
 }
 
 .read-more-button:hover {
-  background-color: #0056b3;
+  background-color: #0a234b;
   transform: translateY(-2px);
 }
 
