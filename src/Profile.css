@@ -146,6 +146,12 @@ body {
   margin-bottom: 10px;
 }
 
+.vibe-section h3 {
+  font-size: 12px;
+  color: #fff;
+  margin-bottom: 0px;
+}
+
 .social-links {
   display: flex;
   gap: 10px;
