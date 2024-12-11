@@ -1,228 +1,237 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 import "./Profile.css";
-import NewsSection from './NewsSection';
-import RecentComments from './RecentComments';
-import VoteSection from './VoteSection';
-import VibeChart from './VibeChart';
+import NewsSection from "./NewsSection";
+import RecentComments from "./RecentComments";
+import VoteSection from "./VoteSection";
+import VibeChart from "./VibeChart";
 
 function Profile({ influencerId }) {
-    const [influencerData, setInfluencerData] = useState(null);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(null);
-    const [showPopup, setShowPopup] = useState(false);
-    const navigate = useNavigate();
-    const [vibeScoreHistory, setVibeScoreHistory] = useState([]);
+  const [influencerData, setInfluencerData] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [showPopup, setShowPopup] = useState(false);
+  const navigate = useNavigate();
+  const [vibeScoreHistory, setVibeScoreHistory] = useState([]);
 
-    useEffect(() => {
-        const fetchInfluencerData = async () => {
-            if (!influencerId) {
-                console.log('No influencerId provided. Navigating back to homepage.');
-                navigate('/');
-                return;
-            }
+  useEffect(() => {
+    const fetchInfluencerData = async () => {
+      if (!influencerId) {
+        console.log("No influencerId provided. Navigating back to homepage.");
+        navigate("/");
+        return;
+      }
 
-            try {
-                console.log('Fetching influencer data...');
-                const response = await fetch('https://vibecheck-backend-57495040685.us-central1.run.app/Influencers');
-                if (!response.ok) {
-                    throw new Error('Failed to fetch influencer data');
-                }
+      try {
+        console.log("Fetching influencer data...");
+        const response = await fetch(
+          "https://vibecheck-backend-57495040685.us-central1.run.app/Influencers"
+        );
+        if (!response.ok) {
+          throw new Error("Failed to fetch influencer data");
+        }
 
-                const data = await response.json();
-                console.log('Fetched influencer data:', data);
+        const data = await response.json();
+        console.log("Fetched influencer data:", data);
 
-                const selectedInfluencer = data.find(inf => inf.id === influencerId);
-                if (selectedInfluencer) {
-                    console.log('Selected Influencer:', selectedInfluencer);
-                    setInfluencerData(selectedInfluencer);
-                } else {
-                    console.log('Influencer not found. Navigating back to homepage.');
-                    navigate('/');
-                }
+        const selectedInfluencer = data.find((inf) => inf.id === influencerId);
+        if (selectedInfluencer) {
+          console.log("Selected Influencer:", selectedInfluencer);
+          setInfluencerData(selectedInfluencer);
+        } else {
+          console.log("Influencer not found. Navigating back to homepage.");
+          navigate("/");
+        }
 
-                console.log('Fetching vibe score history...');
-                const vibeScoreResponse = await fetch(
-                    `https://vibecheck-backend-57495040685.us-central1.run.app/VibeScoreHistory?influencerId=${influencerId}`
-                );
-                if (!vibeScoreResponse.ok) throw new Error('Failed to fetch vibe score history');
+        console.log("Fetching vibe score history...");
+        const vibeScoreResponse = await fetch(
+          `https://vibecheck-backend-57495040685.us-central1.run.app/VibeScoreHistory?influencerId=${influencerId}`
+        );
+        if (!vibeScoreResponse.ok)
+          throw new Error("Failed to fetch vibe score history");
 
-                const vibeScoreData = await vibeScoreResponse.json();
-                console.log('Fetched vibe score history:', vibeScoreData);
+        const vibeScoreData = await vibeScoreResponse.json();
+        console.log("Fetched vibe score history:", vibeScoreData);
 
-                setVibeScoreHistory(
-                    vibeScoreData
-                        .sort((a, b) => new Date(a.recorded_at) - new Date(b.recorded_at))
-                        .slice(-10)
-                );
-            } catch (err) {
-                console.error('Error fetching data:', err);
-                setError('Failed to load influencer data');
-            } finally {
-                setLoading(false);
-            }
-        };
-
-        fetchInfluencerData();
-    }, [influencerId, navigate]);
-
-    const handleReturnHome = () => {
-        console.log('Return to homepage button clicked.');
-        navigate('/');
+        setVibeScoreHistory(
+          vibeScoreData.sort(
+            (a, b) => new Date(a.recorded_at) - new Date(b.recorded_at)
+          )
+        );
+      } catch (err) {
+        console.error("Error fetching data:", err);
+        setError("Failed to load influencer data");
+      } finally {
+        setLoading(false);
+      }
     };
 
-    const handlePopupOpen = () => {
-        console.log('Popup opened.');
-        setShowPopup(true);
-    };
+    fetchInfluencerData();
+  }, [influencerId, navigate]);
 
-    const handlePopupClose = () => {
-        console.log('Popup closed.');
-        setShowPopup(false);
-    };
+  const handleReturnHome = () => {
+    console.log("Return to homepage button clicked.");
+    navigate("/");
+  };
 
-    if (!influencerId) {
-        console.log('No influencerId provided. Navigating back to homepage.');
-        navigate('/');
-        return null;
-    }
+  const handlePopupOpen = () => {
+    console.log("Popup opened.");
+    setShowPopup(true);
+  };
 
-    if (loading) {
-        console.log('Page is loading...');
-        return <div className="loading">Loading...</div>;
-    }
+  const handlePopupClose = () => {
+    console.log("Popup closed.");
+    setShowPopup(false);
+  };
 
-    if (error) {
-        console.error('Error encountered:', error);
-        return <div className="error">{error}</div>;
-    }
+  if (!influencerId) {
+    console.log("No influencerId provided. Navigating back to homepage.");
+    navigate("/");
+    return null;
+  }
 
-    if (!influencerData) {
-        console.log('No influencer data found.');
-        return null;
-    }
+  if (loading) {
+    console.log("Page is loading...");
+    return <div className="loading">Loading...</div>;
+  }
 
-    // Calculate vibePercent
-    const vibePercent = parseInt((influencerData.vibe_score * 100).toFixed(0), 10);
-    console.log('Calculated vibePercent:', vibePercent);
+  if (error) {
+    console.error("Error encountered:", error);
+    return <div className="error">{error}</div>;
+  }
 
-    // Helper function to determine the background color class
-    const getVibeScoreClass = (percent) => {
-        console.log('Vibe Percent passed to getVibeScoreClass:', percent);
-        if (percent < 50) return 'red';
-        if (percent == 50) return 'yellow';
-        if (percent > 50) return 'green';
-    };
+  if (!influencerData) {
+    console.log("No influencer data found.");
+    return null;
+  }
 
-    const assignedClass = getVibeScoreClass(vibePercent);
-    console.log('Assigned Class:', assignedClass);
-    console.log('ClassName Applied:', `vibe-score ${assignedClass}`); // Debugging the applied class
+  // Calculate vibePercent
+  const vibePercent = parseInt((influencerData.vibe_score * 100).toFixed(0), 10);
+  console.log("Calculated vibePercent:", vibePercent);
 
+  // Helper function to determine the background color class
+  const getVibeScoreClass = (percent) => {
+    console.log("Vibe Percent passed to getVibeScoreClass:", percent);
+    if (percent < 50) return "red";
+    if (percent === 50) return "yellow";
+    if (percent > 50) return "green";
+  };
 
-    return (
-        <div className="profile-container">
-            <div className="button-container">
-                <button onClick={handleReturnHome} className="return-home-button">
-                    Return to Homepage
-                </button>
-                <button onClick={handlePopupOpen} className="read-before-use-button">
-                    Read before use!
-                </button>
-            </div>
+  const assignedClass = getVibeScoreClass(vibePercent);
+  console.log("Assigned Class:", assignedClass);
+  console.log("ClassName Applied:", `vibe-score ${assignedClass}`); // Debugging the applied class
 
-            {showPopup && (
-                <div className="popup-overlay" onClick={handlePopupClose}>
-                    <div className="popup-content" onClick={(e) => e.stopPropagation()}>
-                        <button className="close-button" onClick={handlePopupClose}>
-                            &times;
-                        </button>
-                        <p>
-                            VibeCHECK gives celebrity profiles that users can look at to vote on their recent news and comments in the media. The recent news and comments are listed, where we've ran each news article title or comment through our sentiment analysis program. A score is given between 1-10 that provides our algorithm's analysis of the positive or negative mood of each source. Based on that information, users are welcome to vote Good or Bad, which then gets aggregated into our trademarked VibeScore per celebrity.
-                        </p>
-                    </div>
-                </div>
-            )}
+  return (
+    <div className="profile-container">
+      <div className="button-container">
+        <button onClick={handleReturnHome} className="return-home-button">
+          Return to Homepage
+        </button>
+        <button onClick={handlePopupOpen} className="read-before-use-button">
+          Read before use!
+        </button>
+      </div>
 
-            <div className="profile-content">
-                <div className="profile-header">
-                    <img 
-                        src={influencerData.image_url} 
-                        alt={influencerData.name} 
-                        className="profile-image"
-                    />
-                    <div className="profile-info">
-                        <h1>{influencerData.name}</h1>
-                        <div className="info-section">
-                            <div className={`vibe-score ${assignedClass}`}>
-                                VibeScore: {vibePercent}/100 
-                                <h3>Aggregated with Votes & Content Sentiment Analysis</h3>
-                            </div>
-                            <div className="social-section">
-                                <h3>Find {influencerData.name} on Social Media:</h3>
-                                <div className="social-links">
-                                    <a 
-                                        href={`https://${influencerData.instagram}`} 
-                                        target="_blank" 
-                                        rel="noopener noreferrer"
-                                        className="social-link"
-                                    >
-                                        <img 
-                                            src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a5/Instagram_icon.png/768px-Instagram_icon.png" 
-                                            alt="Instagram" 
-                                            className="social-icon"
-                                        />
-                                    </a>
-                                    <a 
-                                        href={`https://${influencerData.youtube}`} 
-                                        target="_blank" 
-                                        rel="noopener noreferrer"
-                                        className="social-link"
-                                    >
-                                        <img 
-                                            src="https://upload.wikimedia.org/wikipedia/commons/e/ef/Youtube_logo.png" 
-                                            alt="YouTube" 
-                                            className="social-icon"
-                                        />
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div className="about-section">
-                    <h2>About {influencerData.name}:</h2>
-                    <p className="bio-text">{influencerData.bio}</p>
-                </div>
-
-                <div className="vote-section">
-                <h2>Your Votes</h2>
-                    <VoteSection 
-                        influencerId={influencerData.id} 
-                        currentVibeScore={influencerData.vibe_score}
-                    />
-                </div>
-
-                <div className="chart-container">
-                    <h2>Recent VibeScore Trend</h2>
-                    <VibeChart
-                        data={vibeScoreHistory.map(item => item.vibe_score * 100)}
-                        labels={vibeScoreHistory.map(item => new Date(item.recorded_at).toLocaleString())}
-                    />
-                </div>
-                <div className="content-sections">
-                    <div className="news-container">
-                        <h2>Recent News Articles</h2>
-                        <NewsSection influencerId={influencerData.id} />
-                    </div>
-                    <div className="comments-container">
-                        <h2>Recent Public Comments</h2>
-                        <RecentComments influencerId={influencerData.id} />
-                    </div>
-                </div>
-            </div>
+      {showPopup && (
+        <div className="popup-overlay" onClick={handlePopupClose}>
+          <div
+            className="popup-content"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <button className="close-button" onClick={handlePopupClose}>
+              &times;
+            </button>
+            <p>
+              VibeCHECK gives celebrity profiles that users can look at to vote
+              on their recent news and comments in the media. The recent news
+              and comments are listed, where we've ran each news article title
+              or comment through our sentiment analysis program. A score is
+              given between 1-10 that provides our algorithm's analysis of the
+              positive or negative mood of each source. Based on that
+              information, users are welcome to vote Good or Bad, which then
+              gets aggregated into our trademarked VibeScore per celebrity.
+            </p>
+          </div>
         </div>
-    );
+      )}
+
+      <div className="profile-content">
+        <div className="profile-header">
+          <img
+            src={influencerData.image_url}
+            alt={influencerData.name}
+            className="profile-image"
+          />
+          <div className="profile-info">
+            <h1>{influencerData.name}</h1>
+            <div className="info-section">
+              <div className={`vibe-score ${assignedClass}`}>
+                VibeScore: {vibePercent}/100
+                <h3>Aggregated with Votes & Content Sentiment Analysis</h3>
+              </div>
+              <div className="social-section">
+                <h3>Find {influencerData.name} on Social Media:</h3>
+                <div className="social-links">
+                  <a
+                    href={`https://${influencerData.instagram}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="social-link"
+                  >
+                    <img
+                      src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a5/Instagram_icon.png/768px-Instagram_icon.png"
+                      alt="Instagram"
+                      className="social-icon"
+                    />
+                  </a>
+                  <a
+                    href={`https://${influencerData.youtube}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="social-link"
+                  >
+                    <img
+                      src="https://upload.wikimedia.org/wikipedia/commons/e/ef/Youtube_logo.png"
+                      alt="YouTube"
+                      className="social-icon"
+                    />
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="about-section">
+          <h2>About {influencerData.name}:</h2>
+          <p className="bio-text">{influencerData.bio}</p>
+        </div>
+
+        <div className="vote-section">
+          <h2>Your Votes</h2>
+          <VoteSection
+            influencerId={influencerData.id}
+            currentVibeScore={influencerData.vibe_score}
+          />
+        </div>
+
+        <div className="chart-container">
+          <h2>Recent VibeScore Trend</h2>
+          <VibeChart influencerId={influencerId} />
+        </div>
+        <div className="content-sections">
+          <div className="news-container">
+            <h2>Recent News Articles</h2>
+            <NewsSection influencerId={influencerData.id} />
+          </div>
+          <div className="comments-container">
+            <h2>Recent Public Comments</h2>
+            <RecentComments influencerId={influencerData.id} />
+          </div>
+        </div>
+      </div>
+    </div>
+  );
 }
 
 export default Profile;
