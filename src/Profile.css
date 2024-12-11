@@ -1,7 +1,5 @@
-/* profile.css */
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap');
 
-/* Global styles */
 * {
   box-sizing: border-box;
   margin: 0;
@@ -20,7 +18,6 @@ body {
   max-width: 1200px;
   margin: 0 auto;
   padding: 20px;
-  /* Removed padding-top: 60px; */
 }
 
 .button-container {
@@ -46,8 +43,8 @@ body {
 }
 
 .read-before-use-button {
-  background-color: red; /* Red background */
-  color: white;          /* White text */
+  background-color: red;
+  color: white;
   border: none;
   padding: 10px 15px;
   border-radius: 5px;
@@ -60,7 +57,6 @@ body {
   background-color: darkred;
 }
 
-/* Popup Overlay */
 .popup-overlay {
   position: fixed;
   top: 0;
@@ -74,7 +70,6 @@ body {
   z-index: 2000;
 }
 
-/* Popup Content */
 .popup-content {
   background-color: #ffffff;
   color: #121212;
@@ -103,8 +98,6 @@ body {
   margin-top: 20px;
   line-height: 1.5;
 }
-
-/* Existing styles for profile-content, profile-header, etc. */
 
 .profile-content {
   margin-top: 20px;
@@ -137,18 +130,62 @@ body {
   font-size: 24px;
 }
 
+/* Keep original vibe-score styling with white text */
 .vibe-score {
-  background: linear-gradient(to right, #28a745, #218838);
   padding: 10px 20px;
+  background: linear-gradient(to right, #28a745, #218838);
+  color: #fff; /* text is white */
   border-radius: 25px;
-  display: inline-block;
+  font-size: 24px;
+  flex-shrink: 0;
 }
 
-.vibe-score h2 {
-  margin: 0;
-  color: white;
-  font-size: 36px;
-  font-weight: bold;
+.info-section {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 10px;
+}
+
+.social-section {
+  margin-left: 20px;
+}
+
+.social-section h3 {
+  font-size: 16px;
+  color: #fff;
+  margin-bottom: 10px;
+}
+
+.social-links {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.social-icon {
+  width: 35px;
+  height: auto;
+  border-radius: 5px;
+  transition: transform 0.2s ease;
+}
+
+.social-icon:hover {
+  transform: scale(1.1);
+}
+
+.about-section,
+.social-section {
+  margin-top: 20px;
+  padding: 15px;
+  border-radius: 10px;
+  background-color: #222;
+}
+
+.bio-text {
+  font-size: 16px;
+  line-height: 1.5;
+  color: #bbb;
 }
 
 .content-sections {
@@ -165,16 +202,15 @@ body {
   border-radius: 8px;
 }
 
-/* CommentArticle Styles */
 .comment-article {
-  background-color: #222; /* Dark grey background */
+  background-color: #222;
   border: 1px solid #444;
   border-radius: 10px;
   padding: 20px;
-  margin-bottom: 20px; /* Space between comments */
+  margin-bottom: 20px;
   display: flex;
   flex-direction: column;
-  gap: 10px; /* Space between inner sections */
+  gap: 10px;
 }
 
 .comment-article-box {
@@ -183,22 +219,20 @@ body {
   gap: 10px;
 }
 
-/* Title Box Styling */
 .title-box {
-  background-color: #333; /* Slightly lighter grey for title box */
+  background-color: #333;
   padding: 10px;
   border-radius: 5px;
 }
 
 .comment-title {
   margin: 0;
-  font-size: 1.2em; /* Smaller font size */
-  color: #fff;      /* White text */
+  font-size: 1.2em;
+  color: #fff;
 }
 
-/* Comment Text Box Styling */
 .comment-text-box {
-  background-color: #333; /* Slightly lighter grey for comment text box */
+  background-color: #333;
   padding: 10px;
   border-radius: 5px;
 }
@@ -206,16 +240,15 @@ body {
 .comment-text {
   color: #bbb;
   font-size: 14px;
-  margin-bottom: 5px; /* Reduced margin to remove space */
+  margin-bottom: 5px;
   padding: 10px;
   background-color: #444;
   border-radius: 4px;
   border-left: 4px solid #28a745;
 }
 
-/* Sentiment Score Box Styling */
 .sentiment-box {
-  background-color: #333; /* Slightly lighter grey for sentiment box */
+  background-color: #333;
   padding: 10px;
   border-radius: 5px;
   display: flex;
@@ -233,16 +266,14 @@ body {
   border-radius: 4px;
   font-weight: bold;
   color: #fff;
-  /* Background color is set dynamically via sentiment class */
 }
 
-/* Read More Button Styling */
 .read-more-button {
   margin-top: 10px;
   display: inline-block;
   padding: 8px 16px;
-  background-color: #555; /* Grey background */
-  color: #fff;               /* White text */
+  background-color: #555;
+  color: #fff;
   text-decoration: none;
   border-radius: 4px;
   font-size: 14px;
@@ -250,28 +281,29 @@ body {
 }
 
 .read-more-button:hover {
-  background-color: #777; /* Darker grey on hover */
+  background-color: #777;
 }
 
-/* Sentiment Score Colors */
 .sentiment-red {
-  background-color: #dc3545; /* Red */
+  background-color: #ffb3b3;
+  color: #000;
 }
 
 .sentiment-yellow {
-  background-color: #ffc107; /* Yellow */
-  color: #000;               /* Black text for better readability on yellow */
+  background-color: #fff2b3;
+  color: #000;
 }
 
 .sentiment-green {
-  background-color: #28a745; /* Green */
+  background-color: #b3ffb3;
+  color: #000;
 }
+
 
 .sentiment-default {
-  background-color: #555; /* Default grey for N/A */
+  background-color: #555;
 }
 
-/* Loading and Error States */
 .comments-loading,
 .comments-error {
   padding: 20px;
@@ -280,7 +312,36 @@ body {
   color: #bbb;
 }
 
-/* Responsive Design */
+.sentiment-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 10px;
+}
+
+.read-more-button {
+  display: inline-block;
+  padding: 8px 12px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: bold;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.read-more-button:hover {
+  background-color: #0056b3;
+  transform: translateY(-2px);
+}
+
+.read-more-button:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.5);
+}
+
 @media (max-width: 768px) {
   .profile-header {
     flex-direction: column;
@@ -295,19 +356,14 @@ body {
     width: 95%;
   }
 
-  .news-article,
-  .comment-article {
-    padding: 15px;
-  }
-
   .comment-title {
-    font-size: 1em; /* Further smaller font size on mobile */
+    font-size: 1em;
   }
 
   .sentiment-box {
     flex-direction: column;
     align-items: flex-start;
-    margin-top: 5px; /* Ensure minimal spacing */
+    margin-top: 5px;
   }
 
   .sentiment-score {
@@ -315,53 +371,11 @@ body {
   }
 
   .comment-text {
-    margin-bottom: 5px; /* Further reduced margin */
+    margin-bottom: 5px;
   }
 
   .read-more-button {
     font-size: 12px;
     padding: 6px 12px;
   }
-}
-/* Sentiment row styles */
-.sentiment-row {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-top: 10px;
-}
-
-/* Sentiment score styles (reuse from earlier) */
-.sentiment-score {
-  margin: 0;
-  padding: 4px 8px;
-  background-color: #444;
-  border-radius: 4px;
-  font-size: 14px;
-  font-weight: bold;
-  color: #fff;
-}
-
-/* Read More Button styles */
-.read-more-button {
-  display: inline-block;
-  padding: 8px 12px;
-  background-color: #007bff; /* Blue background */
-  color: #fff;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  font-size: 14px;
-  font-weight: bold;
-  transition: background-color 0.3s ease, transform 0.2s ease;
-}
-
-.read-more-button:hover {
-  background-color: #0056b3; /* Darker blue */
-  transform: translateY(-2px);
-}
-
-.read-more-button:focus {
-  outline: none;
-  box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.5); /* Focus ring */
 }

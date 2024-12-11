@@ -37,27 +37,42 @@ const NewsSection = ({ influencerId }) => {
         const data = await response.json();
 
         const filteredArticles = data
-          .filter((item) => item.influencer_id === influencerId)
-          .sort((a, b) => new Date(b.date || 0) - new Date(a.date || 0))
-          .slice(0, 5)
-          .map((item) => ({
+        .filter((item) => item.influencer_id === influencerId)
+        .sort((a, b) => new Date(b.date || 0) - new Date(a.date || 0))
+        .slice(0, 5)
+        .map((item) => {
+          // Format sentimentScore
+          let sentimentScore = 'N/A';
+          if (item.sentiment_score !== null && item.sentiment_score !== undefined) {
+            sentimentScore = Number(item.sentiment_score).toFixed(
+              Number(item.sentiment_score) % 1 === 0 ? 0 : 1
+            );
+          }
+      
+          // Determine sentiment category for styling
+          let sentimentClass = 'sentiment-default';
+          const score = parseFloat(sentimentScore);
+          if (!isNaN(score)) {
+            if (score >= 1 && score <= 4) {
+              sentimentClass = 'sentiment-red';
+            } else if (score >= 5 && score <= 7) {
+              sentimentClass = 'sentiment-yellow';
+            } else if (score >= 8 && score <= 10) {
+              sentimentClass = 'sentiment-green';
+            }
+          }
+      
+          return {
             id: item.id,
             title: item.title || 'No Title',
             comment: item.description || 'No description available',
             url: item.url || '#',
             date: item.date,
-            sentimentScore:
-              item.sentiment_score !== null && item.sentiment_score !== undefined
-                ? Number(item.sentiment_score).toFixed(
-                    Number(item.sentiment_score) % 1 === 0 ? 0 : 1
-                  )
-                : 'N/A',
-            sentimentClass: item.sentiment_score > 7
-              ? 'positive'
-              : item.sentiment_score >= 4
-              ? 'neutral'
-              : 'negative',
-          }));
+            sentimentScore: sentimentScore,
+            sentimentClass: sentimentClass,
+          };
+        });
+      
 
         setNewsArticles(
           filteredArticles.length > 0 ? filteredArticles : placeholderArticles
@@ -87,12 +102,14 @@ const NewsSection = ({ influencerId }) => {
           </div>
 
           {/* Sentiment Score Box */}
-          <div className="sentiment-box">
-            <span className="sentiment-label">Sentiment Score:</span>
-            <span className={`sentiment-score ${article.sentimentClass}`}>
-              {article.sentimentScore}/10
-            </span>
-          </div>
+          {/* Sentiment Score Box */}
+      <div className="sentiment-box">
+        <span className="sentiment-label">Sentiment Score:</span>
+        <span className={`sentiment-score ${article.sentimentClass}`}>
+          {article.sentimentScore}/10
+        </span>
+      </div>
+
 
           {/* Read More Button */}
           <div className="read-more-box">
