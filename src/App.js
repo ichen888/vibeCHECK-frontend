@@ -7,9 +7,6 @@ import Profile from './Profile';
 function App() {
   // Global state for holding the selected influencer ID
   const [influencerId, setInfluencerId] = useState(null);
-  
-  // Global state for refreshing the Vote
-  const [voteRefresh, setVoteRefresh] = useState(0);
 
   // Function to update influencer ID when a user selects one
   const handleSelectInfluencer = (id) => {
@@ -29,12 +26,7 @@ function App() {
           {/* Route for Profile page */}
           <Route 
             path="/profile" 
-            element={<Profile 
-              influencerId={influencerId} 
-              voteRefresh={voteRefresh}
-              onVoteSubmitted={handleVoteSubmitted}
-              />
-            } 
+            element={<Profile influencerId={influencerId} />} 
           />
         </Routes>
       </div>
