@@ -238,6 +238,11 @@ function VoteSection({ influencerId }) {
             maxWidth: '300px',
             color: '#000'
           }}>
+            <img 
+              src="https://www.spam.com/wp-content/uploads/2019/08/image-product_spam-classic-7oz.png" 
+              alt="Spam Alert" 
+              style={{ width: '200px', height: '200px', marginBottom: '10px' }} 
+            />
             <h3 style={{color: '#000'}}> Spam Alert! Are you sure you want to keep voting?</h3>
             <div style={{ marginTop: '20px' }}>
               <button 
