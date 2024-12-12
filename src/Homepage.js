@@ -15,7 +15,7 @@ const influencers = [
   { id: 11, name: "Billie Eilish", image: "https://i.iheart.com/v3/catalog/artist/31132274?ops=fit(720%2C720)" },
   { id: 12, name: "Will Smith", image: "https://hips.hearstapps.com/hmg-prod/images/will-smith-attends-varietys-creative-impact-awards-and-10-directors-to-watch-brunch-at-the-parker-palm-springs-on-january-3-2016-in-palm-springs-california-photo-by-jerod-harrisgetty-images.jpg?crop=1.00xw:0.667xh;0,0.0477xh&resize=640:*" },
   { id: 13, name: "Dwayne Johnson", image: "https://m.media-amazon.com/images/M/MV5BOWUzNzIzMzQtNzMxYi00OWRiLTlhZjEtZTRjYWVkYzI4ZjMwXkEyXkFqcGc@._V1_.jpg" },
-  { id: 14, name: "Ariana Grande", image: "https://upload.wikimedia.org/wikipedia/commons/b/b7/Ariana_Grande_-_Vogue_2024.png" },
+  { id: 14, name: "Ariana Grande", image: "https://media.allure.com/photos/62acbe198ba79a787670981b/4:3/w_2664,h_1998,c_limit/6-17%20ariana%20grande.jpg" },
   { id: 15, name: "Selena Gomez", image: "https://upload.wikimedia.org/wikipedia/commons/thumb/8/81/Selena_Gomez_at_the_2024_Toronto_International_Film_Festival_10_%28cropped%29.jpg/1024px-Selena_Gomez_at_the_2024_Toronto_International_Film_Festival_10_%28cropped%29.jpg" },
   { id: 16, name: "Casey Neistat", image: "https://upload.wikimedia.org/wikipedia/commons/thumb/e/ef/Casey_Neistat_%40_SXSW_2017_%2833229303282%29_%28cropped%29.jpg/1024px-Casey_Neistat_%40_SXSW_2017_%2833229303282%29_%28cropped%29.jpg" },
   { id: 17, name: "Joe Rogan", image: "https://i.guim.co.uk/img/media/45727c83d4615bd841d191bf4329a019ea37cd2f/1_335_2069_1242/master/2069.jpg?width=1200&height=1200&quality=85&auto=format&fit=crop&s=9abc3c620f00b6c4e63be993cc98e3d7" },
