@@ -1,35 +1,35 @@
 import React, { useState, useEffect } from 'react';
 
 const ProgressBar = ({ goodPercentage }) => {
-    return (
+  return (
+    <div style={{
+      width: '100%',
+      height: '20px',
+      backgroundColor: '#e0e0de',
+      borderRadius: '10px',
+      margin: '20px 0',
+      position: 'relative'
+    }}>
       <div style={{
-        width: '100%',
-        height: '20px',
-        backgroundColor: '#e0e0de',
-        borderRadius: '10px',
-        margin: '20px 0',
-        position: 'relative'
+        height: '100%',
+        width: `${goodPercentage}%`,
+        backgroundColor: '#4caf50',
+        borderRadius: 'inherit',
+        transition: 'width 0.5s ease-in-out'
+      }} />
+      <div style={{
+        position: 'absolute',
+        top: '50%',
+        left: '50%',
+        transform: 'translate(-50%, -50%)',
+        color: '#000',
+        fontWeight: 'bold'
       }}>
-        <div style={{
-          height: '100%',
-          width: `${goodPercentage}%`,
-          backgroundColor: '#4caf50',
-          borderRadius: 'inherit',
-          transition: 'width 0.5s ease-in-out'
-        }} />
-        <div style={{
-          position: 'absolute',
-          top: '50%',
-          left: '50%',
-          transform: 'translate(-50%, -50%)',
-          color: '#000',
-          fontWeight: 'bold'
-        }}>
-          {goodPercentage}%
-        </div>
+        {goodPercentage}%
       </div>
-    );
-  };  
+    </div>
+  );
+};
 
 function VoteSection({ influencerId }) {
   const [voteData, setVoteData] = useState({
@@ -38,6 +38,10 @@ function VoteSection({ influencerId }) {
   });
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState('');
+
+  const [voteCount, setVoteCount] = useState(0);
+  const [showConfirmation, setShowConfirmation] = useState(false);
+  const [intendedVoteType, setIntendedVoteType] = useState(null);
 
   useEffect(() => {
     console.log('Vote data updated:', voteData);
@@ -72,16 +76,16 @@ function VoteSection({ influencerId }) {
       const data = await response.json();
       console.log('Received vote data:', data);
       setVoteData({
-        good_vote: Number(data[2]), // good_vote is at index 2
-        bad_vote: Number(data[3])   // bad_vote is at index 3
+        good_vote: Number(data[2]),
+        bad_vote: Number(data[3])
       });
     } catch (error) {
       console.error('Fetch error:', error);
       setMessage('Error loading votes');
     }
   };
-  
-  const handleVote = async (isGoodVote) => {
+
+  const submitVote = async (isGoodVote) => {
     setLoading(true);
     setMessage('Processing vote...');
 
@@ -115,6 +119,26 @@ function VoteSection({ influencerId }) {
     }
   };
 
+  const handleVoteClick = (isGoodVote) => {
+    if (voteCount >= 6) {
+      setIntendedVoteType(isGoodVote ? 'good' : 'bad');
+      setShowConfirmation(true);
+    } else {
+      setVoteCount(voteCount + 1);
+      submitVote(isGoodVote);
+    }
+  };
+
+  const handleConfirmation = (confirmed) => {
+    setShowConfirmation(false);
+    if (confirmed && intendedVoteType !== null) {
+      // If user says "Yes", submit the vote and reset the voteCount
+      submitVote(intendedVoteType === 'good');
+      setVoteCount(0); // reset vote count after confirmation
+    }
+    setIntendedVoteType(null);
+  };
+
   useEffect(() => {
     if (influencerId) {
       fetchVoteData();
@@ -126,7 +150,7 @@ function VoteSection({ influencerId }) {
   const badPercentage = totalVotes ? Math.round((voteData.bad_vote / totalVotes) * 100) : 50;
 
   return (
-    <div style={{ padding: '20px' }}>
+    <div style={{ padding: '20px', position: 'relative' }}>
       {message && (
         <div style={{
           padding: '10px',
@@ -139,9 +163,9 @@ function VoteSection({ influencerId }) {
           {message}
         </div>
       )}
-      
+
       <ProgressBar goodPercentage={goodPercentage} />
-      
+
       <div style={{ 
         display: 'flex', 
         justifyContent: 'space-between', 
@@ -154,7 +178,7 @@ function VoteSection({ influencerId }) {
         
         <div>
           <button
-            onClick={() => handleVote(true)}
+            onClick={() => handleVoteClick(true)}
             disabled={loading}
             style={{
               padding: '10px 20px',
@@ -171,7 +195,7 @@ function VoteSection({ influencerId }) {
           </button>
           
           <button
-            onClick={() => handleVote(false)}
+            onClick={() => handleVoteClick(false)}
             disabled={loading}
             style={{
               padding: '10px 20px',
@@ -192,6 +216,62 @@ function VoteSection({ influencerId }) {
           {badPercentage}% Bad
         </span>
       </div>
+
+      {showConfirmation && (
+        <div style={{
+          position: 'fixed',
+          top: 0,
+          left: 0,
+          width: '100vw',
+          height: '100vh',
+          backgroundColor: 'rgba(0,0,0,0.5)',
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          zIndex: 9999
+        }}>
+          <div style={{
+            backgroundColor: '#ffeb3b',
+            padding: '20px',
+            borderRadius: '10px',
+            textAlign: 'center',
+            maxWidth: '300px',
+            color: '#000'
+          }}>
+            <h3 style={{color: '#000'}}> Spam Alert! Are you sure you want to keep voting?</h3>
+            <div style={{ marginTop: '20px' }}>
+              <button 
+                onClick={() => handleConfirmation(true)}
+                style={{
+                  padding: '10px 20px',
+                  margin: '0 10px',
+                  backgroundColor: '#4caf50',
+                  color: '#000',
+                  border: 'none',
+                  borderRadius: '5px',
+                  cursor: 'pointer'
+                }}
+              >
+                Yes
+              </button>
+              <button
+                onClick={() => handleConfirmation(false)}
+                style={{
+                  padding: '10px 20px',
+                  margin: '0 10px',
+                  backgroundColor: '#f44336',
+                  color: '#000',
+                  border: 'none',
+                  borderRadius: '5px',
+                  cursor: 'pointer'
+                }}
+              >
+                No
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
