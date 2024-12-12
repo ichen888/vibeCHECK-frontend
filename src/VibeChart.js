@@ -4,6 +4,7 @@ const VibeChart = ({ influencerId }) => {
   const canvasRef = useRef(null);
   const [data, setData] = useState([]);
   const [labels, setLabels] = useState([]);
+  const [totalAverage, setTotalAverage] = useState(null);
 
   useEffect(() => {
     let intervalId;
@@ -35,20 +36,29 @@ const VibeChart = ({ influencerId }) => {
 
         if (filteredData.length === 0) {
           console.warn("No data found for this influencerId.");
+          setData([]);
+          setLabels([]);
+          setTotalAverage(null);
+          return;
         }
 
-        // Sort by recorded_at and get the last 10 updates
-        const sortedData = filteredData
-          .sort((a, b) => new Date(b.recorded_at) - new Date(a.recorded_at))
-          .slice(0, 10)
-          .reverse(); // Reverse to show the oldest first
+        // Sort all data by recorded_at (descending)
+        const sortedAllData = filteredData.sort(
+          (a, b) => new Date(b.recorded_at) - new Date(a.recorded_at)
+        );
 
-        console.log("Sorted and filtered VibeScoreHistory (last 10):", sortedData);
+        // Calculate total average from all data
+        const allScores = sortedAllData.map(item => Math.max(0, item.vibe_score * 100));
+        const totalAvg = allScores.reduce((sum, value) => sum + value, 0) / allScores.length;
+        setTotalAverage(totalAvg);
 
-        // Manually convert UTC to EST by subtracting 5 hours
-        // and create labels
-        const extractedData = sortedData.map((item) => Math.max(0, item.vibe_score * 100));
-        const extractedLabels = sortedData.map((item, index, array) => {
+        // Take the last 10 entries for display (most recent 12, reverse to oldest->newest for chart)
+        const displayedData = sortedAllData.slice(0, 12).reverse();
+
+        console.log("Sorted and filtered VibeScoreHistory (last 10):", displayedData);
+
+        const extractedData = displayedData.map((item) => Math.max(0, item.vibe_score * 100));
+        const extractedLabels = displayedData.map((item, index, array) => {
           const currentDate = new Date(item.recorded_at);
           const estDate = new Date(currentDate.getTime() - 5 * 60 * 60 * 1000); // subtract 5 hours
 
@@ -97,13 +107,14 @@ const VibeChart = ({ influencerId }) => {
   }, [influencerId]);
 
   useEffect(() => {
-    if (!data.length || !labels.length) {
+    if (!data.length || !labels.length || totalAverage === null) {
       console.log("No data or labels to render chart.");
       return;
     }
 
     console.log("Rendering chart with data:", data);
     console.log("Rendering chart with labels:", labels);
+    console.log("Overall average (all data points):", totalAverage);
 
     const canvas = canvasRef.current;
     const ctx = canvas.getContext("2d");
@@ -116,7 +127,6 @@ const VibeChart = ({ influencerId }) => {
     const padding = 70;
     const maxData = Math.max(...data, 1); // Prevent division by zero
     const minData = 0; // Y-axis starts at 0
-    const avgData = data.reduce((sum, value) => sum + value, 0) / data.length; // Calculate average
 
     ctx.clearRect(0, 0, width, height);
 
@@ -159,10 +169,10 @@ const VibeChart = ({ influencerId }) => {
       const x = padding + (index * (width - 2 * padding)) / (labels.length - 1);
       ctx.fillText(label, x, height - padding + 30);
     });
-    ctx.fillText("Date & Time", width / 2, height - padding + 50);
+    ctx.fillText("Date & Time Updated (in EST)", width / 2, height - padding + 50);
 
-    // Draw average line (red)
-    const avgY = height - padding - ((avgData - minData) / (maxData - minData)) * (height - 2 * padding);
+    // Draw average line (red) using totalAverage from all influencer data
+    const avgY = height - padding - ((totalAverage - minData) / (maxData - minData)) * (height - 2 * padding);
     ctx.beginPath();
     ctx.moveTo(padding, avgY);
     ctx.lineTo(width - padding, avgY);
@@ -176,7 +186,7 @@ const VibeChart = ({ influencerId }) => {
     ctx.fillStyle = "red";
     ctx.font = "12px Arial";
     ctx.textAlign = "left";
-    ctx.fillText("Average", width - padding - 70, avgY - 5);
+    ctx.fillText("Average of all VibeScores", width - padding - 70, avgY - 5);
 
     // Draw data points and line
     ctx.beginPath();
@@ -204,9 +214,9 @@ const VibeChart = ({ influencerId }) => {
       const x = padding + (index * (width - 2 * padding)) / (data.length - 1);
       const y = height - padding - ((value - minData) / (maxData - minData)) * (height - 2 * padding);
 
-      // Draw the point
+      // Draw the point (circle)
       ctx.beginPath();
-      ctx.arc(x, y, 4, 0, 2 * Math.PI);
+      ctx.arc(x, y, 4, 0, 2 * Math.PI); // radius 4
       ctx.fillStyle = "#00ff00";
       ctx.fill();
 
@@ -218,13 +228,13 @@ const VibeChart = ({ influencerId }) => {
       ctx.lineWidth = 2; // Thickness of the outline
       ctx.strokeRect(x - 10, y - 25, 40, 20); // Bubble border
 
-      // Add white text for the score
+      // Increase text size from 10px to 15px
       ctx.fillStyle = "#fff"; // White text
-      ctx.font = "10px Arial";
+      ctx.font = "15px Arial";
       ctx.textAlign = "center";
-      ctx.fillText(value.toFixed(2), x + 10, y - 12); // Centered score text
+      ctx.fillText(value.toFixed(2), x + 10, y - 10); // Adjusted position due to larger font
     });
-  }, [data, labels]);
+  }, [data, labels, totalAverage]);
 
   return (
     <div
